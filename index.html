@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1457b8">
+<title>BacDose 2027 | جرعة بكالوريا</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+--blue:#1457b8;--blue2:#4f91df;--pink:#ed4b9b;--purple:#8d6bd1;
+--yellow:#f5c84b;--mint:#72cfa9;--cream:#fffdf8;
+--dark:#173b72;--text:#35445d;--border:#d9e5f5;
+--bg:linear-gradient(135deg,#fffdf8,#f7fbff 48%,#fff7fb);
+--card:#fff;--shadow:0 8px 24px rgba(25,67,120,.10)
+}
+body.dark{
+--cream:#101827;--dark:#eaf2ff;--text:#cbd6e8;--border:#2c3c55;
+--bg:linear-gradient(135deg,#0d1420,#111b2c,#171322);--card:#172235;
+--shadow:0 8px 24px rgba(0,0,0,.25)
+}
+body{margin:0;padding:14px 14px 88px;font-family:Arial,Tahoma,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.page{display:none;max-width:720px;margin:auto}.page.active{display:block}
+.header-card{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--blue),#6d73cf 48%,var(--pink));color:#fff;padding:25px 18px;border-radius:27px;text-align:center;box-shadow:0 10px 30px rgba(20,87,184,.2);margin-bottom:18px}
+.header-card:before{content:"♡";position:absolute;font-size:95px;opacity:.1;left:8px;top:-38px}
+.header-card:after{content:"✦";position:absolute;font-size:65px;opacity:.13;right:20px;bottom:-24px}
+.header-card h1,.header-card p{position:relative;z-index:1}.header-card h1{margin:0 0 7px;font-size:25px}.header-card p{margin:0;font-size:14px;line-height:1.7}
+.top-actions{display:flex;gap:8px;margin-bottom:14px}
+.top-actions button,.search{border:2px solid var(--border);background:var(--card);color:var(--blue);border-radius:14px;padding:10px;font-weight:bold}
+.top-actions button{flex:1;cursor:pointer}
+.search{width:100%;outline:none;font-size:14px;margin-bottom:15px}
+.section-title{display:flex;align-items:center;gap:8px;color:var(--blue);font-size:19px;font-weight:bold;margin:21px 3px 12px}
+.section-title:after{content:"";height:4px;flex:1;max-width:70px;border-radius:10px;background:linear-gradient(90deg,var(--pink),var(--purple),var(--blue))}
+.card{position:relative;background:var(--card);border:2px solid var(--border);border-radius:20px;padding:16px;margin-bottom:12px;box-shadow:var(--shadow);cursor:pointer;overflow:hidden;transition:.18s;color:var(--text)}
+.card:active{transform:scale(.985)}.card h3{margin:0 0 7px;color:var(--dark);font-size:17px}.card p{margin:0;line-height:1.7;font-size:14px}
+.icon{display:inline-flex;width:43px;height:43px;align-items:center;justify-content:center;border-radius:14px;background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;font-size:20px;margin-left:8px;vertical-align:middle}
+.primary{background:linear-gradient(135deg,var(--blue),var(--purple));border:none;color:#fff}.primary h3,.primary p{color:#fff}.primary .icon{background:rgba(255,255,255,.2)}
+.stream-science .icon{background:linear-gradient(135deg,#57cfa1,#2e9dca)}.stream-math .icon{background:linear-gradient(135deg,#4f91df,#315bb9)}
+.stream-tech .icon{background:linear-gradient(135deg,#9b7ae0,#6652b8)}.stream-economy .icon{background:linear-gradient(135deg,#f3c74d,#e99b38)}
+.stream-literature .icon{background:linear-gradient(135deg,#ed65aa,#9a69d3)}.stream-languages .icon{background:linear-gradient(135deg,#55bfa2,#4b91d8)}
+.subject{display:flex;justify-content:space-between;align-items:center;gap:10px}.subject strong{color:var(--dark);font-size:15px}
+.coeff{background:#dceeff;color:var(--blue);padding:7px 11px;border-radius:11px;font-weight:bold;white-space:nowrap;font-size:13px}
+.note{background:linear-gradient(135deg,#fffaf0,#f8f4ff);border-right:5px solid var(--pink);padding:14px;border-radius:15px;margin:14px 0;line-height:1.9;font-size:14px}
+body.dark .note{background:#20283a}.select-stream{width:100%;padding:13px;border:2px solid var(--border);border-radius:15px;font-size:15px;font-weight:bold;color:var(--blue);background:var(--card);margin-bottom:13px;outline:none}
+.calc-input-group{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:10px}.calc-input-group label{font-weight:bold;color:var(--dark);font-size:13px;flex:1}
+.calc-input-group input{width:84px;padding:9px 7px;border:2px solid var(--border);border-radius:11px;text-align:center;font-size:15px;font-weight:bold;outline:none;color:var(--dark);background:var(--card)}
+.calc-input-group input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #dceeff}.optional-input{border-color:#f1d56e!important}
+.calc-btn{width:100%;background:linear-gradient(135deg,var(--blue),var(--pink));color:#fff;border:none;padding:15px;border-radius:16px;font-size:16px;font-weight:bold;cursor:pointer;margin-top:12px;box-shadow:0 7px 18px rgba(20,87,184,.25)}
+.result-box{background:linear-gradient(135deg,#dceeff,#ffe2f0);border:2px dashed var(--purple);padding:18px;border-radius:18px;text-align:center;margin-top:16px;display:none}.result-box.show{display:block}
+.result-box h2{margin:0 0 5px;color:var(--blue);font-size:34px}.result-box p{margin:0;color:var(--dark);font-weight:bold}
+.error-box{display:none;background:#fff0f0;color:#b3261e;border:1px solid #f1aaaa;padding:11px;border-radius:12px;margin-top:11px;font-size:13px;font-weight:bold}.error-box.show{display:block}
+.dua{padding:16px;border-radius:17px;background:var(--card);border:1px solid #eee3c0;margin-bottom:11px;box-shadow:0 4px 13px rgba(100,80,20,.06)}.dua h3{color:#8a5d00;margin:0 0 8px;font-size:16px}.dua p{color:var(--text);line-height:2;font-size:15px;margin:0}
+.archive-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.archive-grid .card{margin:0}
+.footer{text-align:center;margin:25px 0 8px;color:#718096;font-size:13px}.brand{color:var(--pink);font-weight:bold}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.94);backdrop-filter:blur(15px);border-top:2px solid var(--border);display:flex;justify-content:space-around;padding:8px 5px;box-shadow:0 -7px 25px rgba(25,67,120,.12);z-index:1000}
+body.dark .bottom-nav{background:rgba(16,24,39,.94)}.nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--blue);font-size:11px;font-weight:bold;cursor:pointer;background:none;border:none;flex:1}.nav-icon{font-size:20px}
+.hidden{display:none!important}
+@media(max-width:430px){body{padding:11px 11px 86px}.header-card{padding:22px 14px;border-radius:23px}.header-card h1{font-size:22px}.card{padding:14px}.archive-grid{grid-template-columns:1fr}.calc-input-group label{font-size:12px}.calc-input-group input{width:76px}}
+</style>
+</head>
+<body>
+
+<div id="home" class="page active">
+  <div class="header-card">
+    <h1>✨ جرعة بكالوريا ✨</h1>
+    <p>مساحتك الخاصة للمراجعة والتحضير لبكالوريا 2027</p>
+  </div>
+  <div class="top-actions">
+    <button onclick="toggleDark()">🌙 الوضع الليلي</button>
+    <button onclick="openPage('calc')">🧮 الحاسبة</button>
+  </div>
+  <input id="homeSearch" class="search" placeholder="🔎 ابحث عن شعبة أو قسم..." oninput="filterHome()">
+
+  <div id="homeContent">
+    <div class="section-title">📚 الشعب الدراسية</div>
+    <div class="card stream-science" data-search="علوم تجريبية علوم" onclick="openPage('science')"><span class="icon">🧬</span><strong>علوم تجريبية</strong><p>المواد والمعاملات الخاصة بالشعبة</p></div>
+    <div class="card stream-math" data-search="رياضيات" onclick="openPage('math')"><span class="icon">📐</span><strong>رياضيات</strong><p>الرياضيات والعلوم والمواد المشتركة</p></div>
+    <div class="card stream-tech" data-search="تقني رياضي هندسة" onclick="openPage('engineering')"><span class="icon">⚙️</span><strong>تقني رياضي</strong><p>فروع الهندسة والتكنولوجيا</p></div>
+    <div class="card stream-economy" data-search="تسيير اقتصاد" onclick="openPage('economy')"><span class="icon">💼</span><strong>تسيير واقتصاد</strong><p>التسيير والمحاسبة والاقتصاد والقانون</p></div>
+    <div class="card stream-literature" data-search="اداب فلسفة آداب" onclick="openPage('literature')"><span class="icon">📚</span><strong>آداب وفلسفة</strong><p>العربية والفلسفة والتاريخ والجغرافيا</p></div>
+    <div class="card stream-languages" data-search="لغات اجنبية إنجليزية فرنسية" onclick="openPage('languages')"><span class="icon">🌍</span><strong>لغات أجنبية</strong><p>الإنجليزية والفرنسية واللغة الأجنبية الثالثة</p></div>
+
+    <div class="section-title">💖 الموارد</div>
+    <div class="card primary" data-search="حاسبة معدل" onclick="openPage('calc')"><span class="icon">🧮</span><h3>حاسبة المعدل التفاعلية</h3><p>احسب معدلك حسب شعبتك ومعاملات المواد واحفظ نقاطك على جهازك.</p></div>
+    <div class="card primary" data-search="بكالوريات ارشيف مواضيع حلول" onclick="openPage('bac')"><span class="icon">📄</span><h3>حوليات وبكالوريات سابقة</h3><p>أرشيف 2008 – 2026.</p></div>
+    <div class="card" data-search="مراجعة ملخصات تمارين اختبارات" onclick="openPage('revision')"><span class="icon">📝</span><strong>المراجعة</strong><p>ملخصات وتمارين واختبارات لتنظيم التحضير.</p></div>
+    <div class="card" data-search="اذكار ادعية دعاء" onclick="openPage('azkar')"><span class="icon">🤲</span><strong>الأذكار والأدعية</strong><p>أدعية طلب العلم والتوفيق والتركيز.</p></div>
+    <div class="card" onclick="window.open('https://t.me/bacdose_bot','_blank')"><span class="icon">📢</span><strong>قناة التليغرام الرسمية</strong><p>تابع آخر الدروس والمواضيع.</p></div>
+  </div>
+  <div class="footer"><span class="brand">BacDose</span> 2027 💙💗<br>جرعتك للنجاح والتفوق</div>
+</div>
+
+<script>
+const streamsData={
+science:[["علوم الطبيعة والحياة",6],["الرياضيات",5],["العلوم الفيزيائية",5],["اللغة العربية وآدابها",3],["اللغة الفرنسية",2],["اللغة الإنجليزية",2],["الفلسفة",2],["التاريخ والجغرافيا",2],["العلوم الإسلامية",2],["التربية البدنية والرياضية",1]],
+math:[["الرياضيات",7],["العلوم الفيزيائية",6],["اللغة العربية وآدابها",3],["علوم الطبيعة والحياة",2],["اللغة الفرنسية",2],["اللغة الإنجليزية",2],["الفلسفة",2],["التاريخ والجغرافيا",2],["العلوم الإسلامية",2],["التربية البدنية والرياضية",1]],
+engineering:[["التكنولوجيا",7],["الرياضيات",6],["العلوم الفيزيائية",6],["اللغة العربية وآدابها",3],["اللغة الفرنسية",2],["اللغة الإنجليزية",2],["الفلسفة",2],["التاريخ والجغرافيا",2],["العلوم الإسلامية",2],["التربية البدنية والرياضية",1]],
+economy:[["التسيير المحاسبي والمالي",6],["الاقتصاد والمناجمنت",5],["الرياضيات",5],["التاريخ والجغرافيا",4],["اللغة العربية وآدابها",3],["اللغة الفرنسية",2],["اللغة الإنجليزية",2],["القانون",2],["الفلسفة",2],["العلوم الإسلامية",2],["التربية البدنية والرياضية",1]],
+literature:[["اللغة العربية وآدابها",6],["الفلسفة",6],["التاريخ والجغرافيا",4],["اللغة الإنجليزية",3],["اللغة الفرنسية",3],["الرياضيات",2],["العلوم الإسلامية",2],["التربية البدنية والرياضية",1]],
+languages:[["اللغة العربية وآدابها",5],["اللغة الفرنسية",5],["اللغة الإنجليزية",5],["اللغة الأجنبية الثالثة",4],["التاريخ والجغرافيا",2],["الرياضيات",2],["الفلسفة",2],["العلوم الإسلامية",2],["التربية البدنية والرياضية",1]]
+};
+const titles={science:"🧬 علوم تجريبية",math:"📐 رياضيات",engineering:"⚙️ تقني رياضي",economy:"💼 تسيير واقتصاد",literature:"📚 آداب وفلسفة",languages:"🌍 لغات أجنبية"};
+
+function openPage(id){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ const p=document.getElementById(id);
+ if(p)p.classList.add("active");
+ scrollTo({top:0,behavior:"smooth"});
+ if(id==="calc")loadCalculator();
+}
+function goHome(){openPage("home")}
+function toggleDark(){
+ document.body.classList.toggle("dark");
+ localStorage.setItem("bacdoseDark",document.body.classList.contains("dark")?"1":"0");
+}
+if(localStorage.getItem("bacdoseDark")==="1")document.body.classList.add("dark");
+
+function filterHome(){
+ const q=document.getElementById("homeSearch").value.trim().toLowerCase();
+ document.querySelectorAll("#homeContent .card[data-search]").forEach(c=>{
+   c.classList.toggle("hidden",q && !c.dataset.search.toLowerCase().includes(q));
+ });
+}
+
+function createPage(id,stream){
+ const div=document.createElement("div");div.className="page";div.id=id;
+ div.innerHTML=`<div class="header-card"><h1>${titles[stream]}</h1><p>المواد والمعاملات المدرجة في هذه النسخة</p></div>
+ <div class="note">📌 يمكنك استخدام هذه القائمة لمعرفة المواد والمعاملات، ثم الانتقال إلى الحاسبة لحساب المعدل.</div>
+ <div id="${id}Subjects"></div>`;
+ document.body.appendChild(div);
+ const box=div.querySelector("#"+id+"Subjects");
+ streamsData[stream].forEach(s=>box.innerHTML+=`<div class="card"><div class="subject"><strong>${s[0]}</strong><span class="coeff">معامل ${s[1]}</span></div></div>`);
+}
+["science","math","engineering","economy","literature","languages"].forEach(s=>createPage(s,s));
+
+const calc=document.createElement("div");calc.className="page";calc.id="calc";
+calc.innerHTML=`<div class="header-card"><h1>🧮 حاسبة المعدل</h1><p>اختر شعبتك وأدخل نقاطك من 0 إلى 20</p></div>
+<select id="streamSelect" class="select-stream" onchange="loadCalculator()">
+<option value="science">علوم تجريبية</option><option value="math">رياضيات</option><option value="engineering">تقني رياضي</option><option value="economy">تسيير واقتصاد</option><option value="literature">آداب وفلسفة</option><option value="languages">لغات أجنبية</option></select>
+<div id="calculatorFields" class="card"></div>
+<div id="calcError" class="error-box">الرجاء إدخال علامة جميع المواد الإجبارية بشكل صحيح.</div>
+<button class="calc-btn" onclick="calculateGPA()">احسب المعدل الآن ✨</button>
+<button class="calc-btn" style="margin-top:8px;background:linear-gradient(135deg,#72cfa9,#4b91d8)" onclick="clearGrades()">مسح العلامات</button>
+<div id="resultBox" class="result-box"><h2 id="finalGPA">00.00</h2><p id="gpaStatus">المعدل العام</p></div>`;
+document.body.appendChild(calc);
+
+function loadCalculator(){
+ const key=document.getElementById("streamSelect").value,box=document.getElementById("calculatorFields");
+ box.innerHTML="";
+ const saved=JSON.parse(localStorage.getItem("bacdose_"+key)||"{}");
+ streamsData[key].forEach((s,i)=>{
+  const val=saved[i]??"";
+  box.innerHTML+=`<div class="calc-input-group"><label>${s[0]}<br>(معامل ${s[1]})</label><input type="number" min="0" max="20" step="0.25" value="${val}" placeholder="00" data-index="${i}" data-coeff="${s[1]}" class="sub-input"></div>`;
+ });
+ box.innerHTML+=`<div class="calc-input-group"><label>اللغة الأمازيغية<br>(اختيارية)</label><input type="number" min="0" max="20" step="0.25" placeholder="اختياري" class="sub-input optional-input" id="amazigh"></div>`;
+ document.getElementById("resultBox").classList.remove("show");document.getElementById("calcError").classList.remove("show");
+}
+function saveCurrent(){
+ const key=document.getElementById("streamSelect").value,data={};
+ document.querySelectorAll("#calculatorFields .sub-input:not(#amazigh)").forEach(i=>{data[i.dataset.index]=i.value});
+ localStorage.setItem("bacdose_"+key,JSON.stringify(data));
+}
+function clearGrades(){
+ const key=document.getElementById("streamSelect").value;
+ localStorage.removeItem("bacdose_"+key);loadCalculator();
+}
+function calculateGPA(){
+ const inputs=document.querySelectorAll("#calculatorFields .sub-input:not(#amazigh)");
+ let points=0,coeffs=0,ok=true;
+ inputs.forEach(i=>{
+  const v=parseFloat(i.value),c=parseFloat(i.dataset.coeff);
+  if(i.value.trim()===""||isNaN(v)||v<0||v>20)ok=false; else {points+=v*c;coeffs+=c}
+ });
+ if(!ok){document.getElementById("calcError").classList.add("show");document.getElementById("resultBox").classList.remove("show");return}
+ saveCurrent();
+ const az=parseFloat(document.getElementById("amazigh").value);
+ if(!isNaN(az)&&az>10)points+=(az-10)*2;
+ const g=points/coeffs;
+ document.getElementById("finalGPA").textContent=g.toFixed(2);
+ const st=document.getElementById("gpaStatus");
+ st.textContent=g>=18?"ممتاز جدًا! 🌟":g>=16?"جيد جدًا! 💙":g>=14?"جيد! 💜":g>=12?"قريب من الجيد! 🌸":g>=10?"مبروك! ناجح 🎉":"واصل الاجتهاد والعمل 💪";
+ document.getElementById("resultBox").classList.add("show");
+ document.getElementById("resultBox").scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+const extraPages={
+bac:`<div class="header-card"><h1>📄 بكالوريات سابقة</h1><p>أرشيف المواضيع والحلول</p></div><div class="note">📚 أضف روابط الملفات أو قناة Telegram داخل البطاقات عند توفرها.</div><div class="archive-grid">${["2008 – 2012","2013 – 2016","2017 – 2020","2021 – 2023","2024 – 2026"].map(x=>`<div class="card"><h3>📚 ${x}</h3><p>مواضيع وحلول البكالوريا السابقة</p></div>`).join("")}</div>`,
+revision:`<div class="header-card"><h1>📝 المراجعة</h1><p>نظم مراجعتك لبكالوريا 2027</p></div>${[["📖","الملخصات","ملخصات مركزة تساعدك على تثبيت المعلومات."],["✏️","التمارين","تمارين تطبيقية للتدرب على مختلف أنواع الأسئلة."],["📅","جدول المراجعة","نظم وقتك ووزع المواد حسب الأولوية."],["🧠","اختبارات قصيرة","اختبر نفسك باستمرار لمعرفة مستوى تقدمك."]].map(x=>`<div class="card"><h3>${x[0]} ${x[1]}</h3><p>${x[2]}</p></div>`).join("")}`,
+azkar:`<div class="header-card"><h1>🤲 الأذكار والأدعية</h1><p>أدعية تعينك على طلب العلم والمراجعة والنجاح</p></div><div class="note">🌿 اجعل الدعاء مع الأخذ بالأسباب والاجتهاد، واستعن بالله في كل خطوة.</div>
+${[["📖 دعاء طلب العلم","﴿رَبِّ زِدْنِي عِلْمًا﴾"],["✨ دعاء التوفيق","اللهم وفقني في دراستي، ويسّر لي أمري، وبارك لي في وقتي وجهدي، واكتب لي النجاح والتوفيق."],["🧠 دعاء الحفظ","اللهم ارزقني فهمًا وحفظًا وثباتًا، وبارك لي في علمي."],["🎯 دعاء التركيز","اللهم ارزقني التركيز والفهم وحسن الاستيعاب."],["📝 قبل المراجعة","اللهم افتح عليّ أبواب الفهم، ويسّر لي المراجعة، وبارك لي في وقتي."],["🎓 قبل الامتحان","اللهم لا سهل إلا ما جعلته سهلاً، وذكّرني ما نسيت، ووفقني للإجابة الصحيحة."]].map(x=>`<div class="dua"><h3>${x[0]}</h3><p>${x[1]}</p></div>`).join("")}`
+};
+Object.entries(extraPages).forEach(([id,content])=>{const d=document.createElement("div");d.className="page";d.id=id;d.innerHTML=content;document.body.appendChild(d)});
+
+const nav=document.createElement("nav");nav.className="bottom-nav";nav.innerHTML=`<button class="nav-item" onclick="goHome()"><span class="nav-icon">🏠</span>الرئيسية</button><button class="nav-item" onclick="openPage('calc')"><span class="nav-icon">🧮</span>الحاسبة</button><button class="nav-item" onclick="openPage('bac')"><span class="nav-icon">📄</span>الأرشيف</button><button class="nav-item" onclick="openPage('revision')"><span class="nav-icon">📝</span>المراجعة</button>`;document.body.appendChild(nav);
+document.addEventListener("DOMContentLoaded",loadCalculator);
+</script>
+</body>
+  </html>
