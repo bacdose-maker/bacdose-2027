@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BacDose 2027</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+      --bg-color: #fffafc;
+      --card-bg: #ffffff;
+      --card-border: #ffd6e5;
+      --text-main: #2d3748;
+      --text-sub: #718096;
+      --accent-pink: #ff4d8d;
+      --badge-bg: #ffe4ee;
+      --success: #10b981;
+      --error: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      padding: 16px;
+      max-width: 500px;
+      margin: 0 auto;
+      min-height: 100vh;
+      padding-bottom: 40px;
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      background: var(--primary-gradient);
+      color: white;
+      padding: 22px 16px;
+      border-radius: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 20px rgba(255, 117, 140, 0.25);
+    }
+
+    .hero-banner h1 {
+      font-size: 1.7rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .golden-rule {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(5px);
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      margin-top: 8px;
+      line-height: 1.4;
+    }
+
+    /* Section Headers */
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin: 20px 0 12px 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #1a202c;
+    }
+
+    /* Cards Layout */
+    .cards-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .item-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--card-border);
+      border-radius: 16px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    }
+
+    .item-card:active {
+      transform: scale(0.98);
+      background-color: #fff5f8;
+    }
+
+    .card-info h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1a202c;
+    }
+
+    .card-info p {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+    }
+
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--primary-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .coef-badge {
+      background: var(--badge-bg);
+      color: var(--accent-pink);
+      font-weight: 800;
+      font-size: 0.95rem;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* Navigation & Views */
+    .view-page {
+      display: none;
+    }
+
+    .view-page.active {
+      display: block;
+    }
+
+    .back-btn {
+      background: none;
+      border: none;
+      color: var(--accent-pink);
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      margin-bottom: 14px;
+    }
+
+    /* Content Blocks & Tables */
+    .content-block {
+      background: #ffffff;
+      border: 1.5px solid var(--card-border);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .content-block h4 {
+      color: var(--accent-pink);
+      font-size: 1rem;
+      margin-bottom: 10px;
+      border-bottom: 1px solid var(--badge-bg);
+      padding-bottom: 6px;
+    }
+
+    .content-block ul, .content-block ol {
+      padding-right: 20px;
+      font-size: 0.88rem;
+      line-height: 1.7;
+    }
+
+    .content-block li {
+      margin-bottom: 6px;
+    }
+
+    .highlight-box {
+      background: #fff1f2;
+      border-right: 4px solid var(--accent-pink);
+      padding: 10px 14px;
+      border-radius: 0 8px 8px 0;
+      margin: 10px 0;
+      font-size: 0.88rem;
+    }
+
+    .code-block {
+      background: #0f172a;
+      color: #38bdf8;
+      padding: 12px;
+      border-radius: 10px;
+      font-family: monospace;
+      direction: ltr;
+      text-align: left;
+      margin: 10px 0;
+      white-space: pre-wrap;
+      word-break: break-all;
+      font-size: 0.85rem;
+    }
+
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      margin: 12px 0;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: right;
+      font-size: 0.85rem;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    th {
+      background: #f1f5f9;
+      color: var(--text-main);
+      font-weight: 700;
+    }
+
+    /* Quiz Styling */
+    .quiz-card {
+      background: #fff;
+      border: 1.5px solid var(--card-border);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .quiz-option {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 10px 14px;
+      border-radius: 10px;
+      margin-top: 8px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      transition: all 0.2s;
+    }
+
+    .quiz-option.correct {
+      background: #dcfce7;
+      border-color: var(--success);
+      color: #166534;
+      font-weight: 700;
+    }
+
+    .quiz-option.wrong {
+      background: #fee2e2;
+      border-color: var(--error);
+      color: #991b1b;
+      font-weight: 700;
+    }
+
+    /* Calculator */
+    .calc-input {
+      width: 100%;
+      padding: 10px;
+      margin: 6px 0;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+
+    .calc-btn {
+      width: 100%;
+      background: var(--primary-gradient);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- الصفحة الأولى: الرئيسية -->
+  <div id="page-home" class="view-page active">
+    
+    <div class="hero-banner">
+      <h1>🎓 BacDose 2027</h1>
+      <div class="golden-rule">
+        💡 <strong>القاعدة الذهبية:</strong> "النجاح ليس كمية الساعات التي تدرسها، بل الانضباط اليومي والتركيز العالي. استمر خطوة بخطوة!"
+      </div>
+    </div>
+
+    <div class="section-title">📚 الشعب الدراسية</div>
+    <div class="cards-list">
+      <div class="item-card" onclick="openStream('علوم تجريبية')">
+        <div class="card-info"><h3>علوم تجريبية</h3><p>المواد والمعاملات والملخصات الخاصة</p></div>
+        <div class="card-icon">🧬</div>
+      </div>
+      <div class="item-card" onclick="openStream('رياضيات')">
+        <div class="card-info"><h3>رياضيات</h3><p>الرياضيات والفيزياء والتكثيف المعرفي</p></div>
+        <div class="card-icon">📐</div>
+      </div>
+      <div class="item-card" onclick="openStream('هندسة')">
+        <div class="card-info"><h3>هندسة</h3><p>شعبة تقني رياضي والوضعيات التقنية</p></div>
+        <div class="card-icon">⚙️</div>
+      </div>
+      <div class="item-card" onclick="openStream('تسيير واقتصاد')">
+        <div class="card-info"><h3>تسيير واقتصاد</h3><p>المحاسبة والاقتصاد والتسيير</p></div>
+        <div class="card-icon">💼</div>
+      </div>
+      <div class="item-card" onclick="openStream('آداب وفلسفة / لغات')">
+        <div class="card-info"><h3>آداب وفلسفة / لغات</h3><p>مقالات الفلسفة واللغات الأجنبية</p></div>
+        <div class="card-icon">🧠</div>
+      </div>
+    </div>
+
+    <div class="section-title">🧠 خرائط ذهنية وقوانين ومصطلحات</div>
+    <div class="cards-list">
+      <div class="item-card" onclick="openSection('mindmaps-physics')">
+        <div class="card-info"><h3>قوانين الفيزياء والرياضيات</h3><p>جميع القوانين ملخصة مركزة</p></div>
+        <div class="card-icon">⚡</div>
+      </div>
+      <div class="item-card" onclick="openSection('mindmaps-history')">
+        <div class="card-info"><h3>تواريخ ومصطلحات التاريخ والجغرافيا</h3><p>خرائط ذهنية للحفظ السريع</p></div>
+        <div class="card-icon">🗺️</div>
+      </div>
+    </div>
+
+    <div class="section-title">❓ أسئلة تفاعلية (اختبر نفسك)</div>
+    <div class="quiz-card">
+      <p><strong>سؤال اليوم (تاريخ):</strong> ما هو تاريخ تأسيس حركة عدم الانحياز؟</p>
+      <div class="quiz-option" onclick="checkAnswer(this, false)">أ) 1945</div>
+      <div class="quiz-option" onclick="checkAnswer(this, true)">ب) 1–6 سبتمبر 1961 (بلغراد)</div>
+      <div class="quiz-option" onclick="checkAnswer(this, false)">ج) 1954</div>
+    </div>
+
+    <div class="section-title">✨ أفكار، أدعية وحاسبة المعدل</div>
+    <div class="cards-list">
+      <div class="item-card" onclick="openSection('prayers')">
+        <div class="card-info"><h3>أدعية التسهيل والمذاكرة</h3><p>أدعية الفهم، التركيز والامتحان</p></div>
+        <div class="card-icon">🤲</div>
+      </div>
+      <div class="item-card" onclick="openSection('calc')">
+        <div class="card-info"><h3>حاسبة معدل البكالوريا</h3><p>احسب معدلك بسهولة</p></div>
+        <div class="card-icon">🧮</div>
+      </div>
+    </div>
+
+    <div class="section-title">📁 حوليات وبكالوريات سابقة</div>
+    <div class="cards-list">
+      <div class="item-card" onclick="openSection('bac-archive')">
+        <div class="card-info"><h3>مواضيع البكالوريا مع التصحيح النموذجية</h3><p>دورة 2020 إلى 2026</p></div>
+        <div class="card-icon">📑</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- الصفحة الثانية: قائمة المواد -->
+  <div id="page-subjects" class="view-page">
+    <button class="back-btn" onclick="showPage('page-home')">➡️ العودة للرئيسية</button>
+
+    <div class="hero-banner">
+      <h1 id="subjects-header-title">اسم الشعبة</h1>
+      <p id="subjects-header-sub">المواد المبرمجة والمعاملات الخاصة</p>
+    </div>
+
+    <div class="cards-list" id="subjects-container"></div>
+  </div>
+
+  <!-- الصفحة الثالثة: الوحدات والدروس التفصيلية -->
+  <div id="page-content" class="view-page">
+    <button class="back-btn" onclick="showPage('page-subjects')">➡️ العودة للمواد</button>
+
+    <div class="hero-banner">
+      <h1 id="lessons-header-title">المادة</h1>
+      <p>الوحدات التعليمية والملخصات التفصيلية</p>
+    </div>
+
+    <div id="lessons-container"></div>
+  </div>
+
+  <!-- JavaScript Base & Complete Data -->
+  <script>
+    // قاعدة البيانات الشاملة الكاملة لجميع الدروس
+    const fullLessonsData = {
+      "علوم الطبيعة والحياة": [
+        {
+          title: "الوحدة 1: تركيب البروتين",
+          htmlContent: `
+            <p><strong>أولاً: استنساخ المعلومة الوراثية (في النواة)</strong></p>
+            <ul>
+              <li><strong>مرحلة البداية:</strong> يرتبط إنزيم ARN بوليميراز بمنطقة بداية الجين على الـ ADN، ويفك التحلزن ويقطع الروابط الهيدروجينية بين السلسلتين.</li>
+              <li><strong>مرحلة الاستطالة:</strong> يتحرك الإنزيم على طول السلسلة المستنسخة ويركب النيوكليوتيدات الريبية الحرة المكملة.</li>
+              <li><strong>مرحلة النهاية:</strong> يصل الإنزيم لنهاية الجين، ينفصل سينتَج جزيء ARNm وتكتمل العملية.</li>
+            </ul>
+            <p><strong>ثانياً: ترجمة ARNm إلى سلسلة ببتيدية (في الهيولى)</strong></p>
+            <ul>
+              <li><strong>المتطلبات:</strong> جزيئات ARNm، ريبوسومات مكتملة البنية، ARNt حامل للأحماض الأمينية، وطاقة ATP.</li>
+              <li><strong>المراحل:</strong> انطلاق الترجمة عند رامزة البداية (AUG)، استطالة السلسلة الببتيدية، ثم النهاية عند إحدى رامزات التوقف (UAA, UAG, UGA).</li>
+            </ul>
+          `
+        },
+        {
+          title: "الوحدة 2: العلاقة بين بنية ووظيفة البروتين",
+          htmlContent: `
+            <ul>
+              <li><strong>البنية الأولية:</strong> تتابع خطي للأحماض الأمينية بفرابط ببتيدية.</li>
+              <li><strong>البنية الثانوية:</strong> انثناءات حلزونية Alpha أو صفائح Beta مثبتة بروابط هيدروجينية.</li>
+              <li><strong>البنية الثالثية والرابعية:</strong> انطواء السلسلة واستقرارها بواسطة روابط ثنائية الكبريت، شاردية، وهيدروجينية تجعل البروتين وظيفياً.</li>
+            </ul>
+          `
+        },
+        {
+          title: "الوحدة 3: النشاط الإنزيمي والأنظمة الدفاعية (المناعة والاتصال العصبي)",
+          htmlContent: `
+            <p><strong>1. التخصص الإنزيمي:</strong> الإنزيم وسيط حيوي بروتيني يتميز بالتخصص الوظيفي المزدوج (نوع التفاعل ونوع الركيزة).</p>
+            <p><strong>2. المناعة (الذات واللاذات):</strong></p>
+            <ul>
+              <li>تتعرف العضوية على الذات بواسطة معقد التوافق النسيجي الرئيسي (CMH / HLA).</li>
+              <li>الاستجابة الخلطية اعتمد على اللمفاويات LB وإنتاج الأجسام المضادة.</li>
+              <li>الاستجابة الخلوية اعتمد على اللمفاويات LTc السامة.</li>
+            </ul>
+            <p><strong>3. الاتصال العصبي والتنظيم الهرموني:</strong> انتقال السيالة العصبية مشبكياً عبر المشابك الكيميائية (الاستيل كولين) والتنظيم الذاتي للهرمونات.</p>
+          `
+        }
+      ],
+      "الرياضيات": [
+        {
+          title: "الوحدة 1: الدوال والتمثيلات البيانية (المقاربات والنهايات)",
+          htmlContent: `
+            <p><strong>المستقيمات المقاربة:</strong></p>
+            <ul>
+              <li>إذا كان <code>lim (x→a) f(x) = ∞</code> فإن المستقيم <code>x = a</code> مقارب عمودي.</li>
+              <li>إذا كان <code>lim (x→∞) f(x) = b</code> فإن المستقيم <code>y = b</code> مقارب أفقي.</li>
+              <li>إذا كان <code>lim (x→∞) [f(x) - (ax + b)] = 0</code> فإن المستقيم <code>y = ax + b</code> مقارب مائل.</li>
+            </ul>
+            <div class="highlight-box">
+              💡 <strong>قاعدة التناظر:</strong> لإثبات أن النقطة A(α, β) هي مركز تناظر للمنحنى (Cf)، نتحقق من: <code>f(2α - x) + f(x) = 2β</code>.
+            </div>
+          `
+        },
+        {
+          title: "الوحدة 2: المتتاليات العددية والبرهان بالتراجع",
+          htmlContent: `
+            <p><strong>خطوات البرهان بالتراجع:</strong></p>
+            <ol>
+              <li>التحقق من صحة الخاصية P(n) لأجل الحد الأول P(n0).</li>
+              <li>فرض صحة الخاصية P(n) من أجل العدد n.</li>
+              <li>إثبات صحة الخاصية P(n+1).</li>
+            </ol>
+            <p><strong>التقارب:</strong> تكون المتتالية متقاربة إذا كانت تزايدية ومحدودة من الأعلى، أو تناقصية ومحدودة من الأسفل.</p>
+          `
+        },
+        {
+          title: "الوحدة 3: الحساب في Z والموافقات (خاص بأدب وفلسفة / لغات)",
+          htmlContent: `
+            <p><strong>خواص الموافقات بفي القاسم n:</strong></p>
+            <ul>
+              <li>إذا كان <code>a ≡ b [n]</code> و <code>c ≡ d [n]</code> فإن:</li>
+              <li>الجمع: <code>a + c ≡ b + d [n]</code></li>
+              <li>الضرب: <code>a × c ≡ b × d [n]</code></li>
+              <li>الأسس: <code>a^k ≡ b^k [n]</code></li>
+            </ul>
+          `
+        }
+      ],
+      "العلوم الفيزيائية": [
+        {
+          title: "الوحدة 1: المتابعة الزمنية لتحول كيميائي",
+          htmlContent: `
+            <p>جدول تقدم التفاعل وحساب زمن نصف التفاعل <code>t1/2</code>:</p>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>الحالة</th>
+                    <th>التقدم x</th>
+                    <th>كميات المادة (مول)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>الابتدائية</td>
+                    <td>0</td>
+                    <td>n0(A) , n0(B)</td>
+                  </tr>
+                  <tr>
+                    <td>الانتقالية</td>
+                    <td>x(t)</td>
+                    <td>n0(A) - a*x , n0(B) - b*x</td>
+                  </tr>
+                  <tr>
+                    <td>النهائية</td>
+                    <td>x_max</td>
+                    <td>n0(A) - a*x_max , n0(B) - b*x_max</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="highlight-box">تعريف زمن نصف التفاعل t1/2: هو الزمن اللازم لبلوع التقدم نصف قيمته النهائية <code>x(t1/2) = x_max / 2</code>.</div>
+          `
+        },
+        {
+          title: "الوحدة 2: الظواهر الكهربائية والميكانيك",
+          htmlContent: `
+            <ul>
+              <li><strong>ثنائي القطب RC و RL:</strong> شحن وتفريغ المكثفة (ثابت الزمن τ = RC)، وتطبيق قانون إضافية التوترات.</li>
+              <li><strong>قوانين نيوتن للميكانيك:</strong> تطبيق القانون الثاني لنيوتن لحركة الأجسام على المستويات وتحديد التسارع والمقذوفات.</li>
+            </ul>
+          `
+        }
+      ],
+      "الفلسفة": [
+        {
+          title: "الوحدة 1: المنهجية الجدلية (طريقة كتابة المقال الفلسفي)",
+          htmlContent: `
+            <ul>
+              <li><strong>طرح المشكلة (المقدمة):</strong> تمهيد عام + طرح الإشكال المتناقض + صياغة السؤال الفلسفي.</li>
+              <li><strong>محاور العرض (التوسيع):</strong>
+                <ul>
+                  <li>عرض الأطروحة الأولى + الحجج والبراهين + النقد.</li>
+                  <li>عرض نقيض الأطروحة + الحجج والبراهين + النقد.</li>
+                  <li>التركيب أو التجاوز + إبداء الرأي الشخصي المبرر.</li>
+                </ul>
+              </li>
+              <li><strong>حل المشكلة (الخاتمة):</strong> استنتاج حاسم ينسجم مع التحليل السابق.</li>
+            </ul>
+          `
+        },
+        {
+          title: "الوحدة 2: دروس برنامج آداب وفلسفة",
+          htmlContent: `
+            <ul>
+              <li><strong>الإحساس والإدراك:</strong> العلاقة بين العقل والمحيط وتفسير العوامل الذاتية والموضوعية.</li>
+              <li><strong>اللغة والفكر:</strong> مشكلة الدال والمدلول وهل يمكن الفكر دون لغة.</li>
+              <li><strong>الشعور واللاشعور:</strong> مدرسة التحليل النفسي (فريد) ونظرية اللاشعور.</li>
+              <li><strong>الذاكرة والخيال:</strong> طبيعة الذاكرة (فردية أم اجتماعية) وأنواع الإبداع.</li>
+              <li><strong>الأخلاق والعدل:</strong> أصل الأخلاق (العقل، المنفعة، الدين) ومفهوم الحقوق والواجبات.</li>
+            </ul>
+          `
+        },
+        {
+          title: "الوحدة 3: دروس برنامج اللغات الأجنبية (فلسفة العلوم)",
+          htmlContent: `
+            <ul>
+              <li><strong>أصل المفاهيم الرياضية:</strong> بين الاتجاه العقلي (المفاهيم الفطرية) والاتجاه التجريبي (الحسي).</li>
+              <li><strong>التجريب في المادة الحية:</strong> العوائق التي تواجه تطبيق المنهج التجريبي على البيولوجيا.</li>
+              <li><strong>العلوم الإنسانية:</strong> إمكانية تطبيق المنهج التجريبي على التاريخ، علم النفس، وعلم الاجتماع.</li>
+            </ul>
+          `
+        }
+      ],
+      "اللغات الأجنبية (فرنسية / إنجليزية)": [
+        {
+          title: "Français: Le Compte Rendu Objectif et Critique",
+          htmlContent: `
+            <p><strong>Structure du Compte Rendu:</strong></p>
+            <div class="code-block">
+1. L'accroche (Amorce):
+"Ce texte intitulé '[Titre]', écrit par [Auteur], extrait de [Source], publié en [Date], traite de [Thème]."
+
+2. Le condensé (Résumé):
+"L'auteur commence par expliquer que... Ensuite, il souligne que... Enfin, il conclut en affirmant que..."
+
+3. La critique (Pour les classes littéraires):
+"L'auteur a utilisé un vocabulaire clair... Son point de vue est bien argumenté..."
+            </div>
+            <p><strong>Projets du Programme:</strong> Projet 1 (Le récit historique), Projet 2 (Le texte argumentatif), Projet 3 (L'appel).</p>
+          `
+        },
+        {
+          title: "English: Grammar & Expressing Key Relationships",
+          htmlContent: `
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Function</th>
+                    <th>Connectors</th>
+                    <th>Example</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Cause</td>
+                    <td>Because, Since, Due to</td>
+                    <td>Due to poor safety, accidents occurred.</td>
+                  </tr>
+                  <tr>
+                    <td>Effect</td>
+                    <td>Therefore, As a result</td>
+                    <td>He studied hard; therefore, he passed.</td>
+                  </tr>
+                  <tr>
+                    <td>Condition</td>
+                    <td>Provided that, As long as</td>
+                    <td>You succeed provided that you work hard.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>Important Rules:</strong> Condition (Types 0 to 3), Expressing Wish and Advice, Active vs Passive Voice, Reported Speech.</p>
+          `
+        }
+      ],
+      "التكنولوجيا / الهندسة الكهربائية": [
+        {
+          title: "الوحدة 1: حل الوضعيات التقنية ودفتر الشروط",
+          htmlContent: `
+            <ol>
+              <li>تحليل دفتر الشروط الوظيفي وتحديد النشاطات والدوال التكنولوجية.</li>
+              <li>تحديد المداخل والمخارج وأعضاء التقاط الإشارات (المتحسسات والمنفذات).</li>
+              <li>إنجاز وتعبئة المخططات الوظيفية (GRAFCET) حسب معطيات التشغيل.</li>
+              <li>حساب المعادلات المنطقية المخرجية وتصميم الدارات الإلكترونية/المنطقية.</li>
+            </ol>
+          `
+        }
+      ],
+      "التربية الإسلامية": [
+        {
+          title: "الوحدة 1: الدروس المقررة في برنامج الشريعة (18 درسًا)",
+          htmlContent: `
+            <ul>
+              <li><strong>الفصل الأول:</strong> العقيدة الإسلامية وأثرها، وسائل القرآن في تثبيت العقيدة، موقف القرآن من العقل، المقاصد الشرعية، منهج الإسلام في محاربة الانحراف والجريمة.</li>
+              <li><strong>الفصل الثاني:</strong> المساواة أمام أحكام الشريعة، الصحة النفسية والجسدية، مصادر التشريع الإسلامي، الإجماع، القياس، المصلحة المرسلة، القيم الإيمانية والخلقية.</li>
+              <li><strong>الفصل الثالث:</strong> الوقف، أحكام الميراث، الربا وأحكامه، المعاملات المالية الجائزة (المرابحة، التقسيط)، النسب والتبني والكفالة، خطبة حجة الوداع.</li>
+            </ul>
+          `
+        }
+      ]
+    };
+
+    const streamsData = {
+      "علوم تجريبية": [
+        { name: "علوم الطبيعة والحياة", coef: 6 },
+        { name: "الرياضيات", coef: 5 },
+        { name: "العلوم الفيزيائية", coef: 4 },
+        { name: "اللغات الأجنبية (فرنسية / إنجليزية)", coef: 3 },
+        { name: "التربية الإسلامية", coef: 2 },
+        { name: "الفلسفة", coef: 2 }
+      ],
+      "رياضيات": [
+        { name: "الرياضيات", coef: 7 },
+        { name: "العلوم الفيزيائية", coef: 6 },
+        { name: "اللغات الأجنبية (فرنسية / إنجليزية)", coef: 3 },
+        { name: "التربية الإسلامية", coef: 2 }
+      ],
+      "هندسة": [
+        { name: "التكنولوجيا / الهندسة الكهربائية", coef: 6 },
+        { name: "الرياضيات", coef: 6 },
+        { name: "العلوم الفيزيائية", coef: 4 },
+        { name: "التربية الإسلامية", coef: 2 }
+      ],
+      "تسيير واقتصاد": [
+        { name: "الرياضيات", coef: 5 },
+        { name: "اللغات الأجنبية (فرنسية / إنجليزية)", coef: 3 },
+        { name: "التربية الإسلامية", coef: 2 }
+      ],
+      "آداب وفلسفة / لغات": [
+        { name: "الفلسفة", coef: 6 },
+        { name: "اللغات الأجنبية (فرنسية / إنجليزية)", coef: 5 },
+        { name: "التربية الإسلامية", coef: 2 }
+      ]
+    };
+
+    function showPage(pageId) {
+      document.querySelectorAll('.view-page').forEach(page => page.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    function openStream(streamName) {
+      document.getElementById('subjects-header-title').innerText = streamName;
+      document.getElementById('subjects-header-sub').innerText = "المواد المبرمجة والمعاملات الخاصة بالشعبة";
+      
+      const container = document.getElementById('subjects-container');
+      container.innerHTML = '';
+
+      const list = streamsData[streamName] || [];
+      list.forEach(subject => {
+        const card = document.createElement('div');
+        card.className = 'item-card';
+        card.onclick = () => openLessons(subject.name);
+        card.innerHTML = `
+          <div class="card-info">
+            <h3>${subject.name}</h3>
+          </div>
+          <div class="coef-badge">${subject.coef}</div>
+        `;
+        container.appendChild(card);
+      });
+
+      showPage('page-subjects');
+    }
+
+    function openLessons(subjectName) {
+      document.getElementById('lessons-header-title').innerText = subjectName;
+      const container = document.getElementById('lessons-container');
+      container.innerHTML = '';
+
+      const lessons = fullLessonsData[subjectName];
+
+      if (lessons && lessons.length > 0) {
+        lessons.forEach(lesson => {
+          const block = document.createElement('div');
+          block.className = 'content-block';
+          block.innerHTML = `
+            <h4>📌 ${lesson.title}</h4>
+            ${lesson.htmlContent}
+          `;
+          container.appendChild(block);
+        });
+      } else {
+        container.innerHTML = `
+          <div class="content-block">
+            <h4>📌 ملخص المادة</h4>
+            <p>جاري إضافة بقية محاور الدروس.</p>
+          </div>
+        `;
+      }
+
+      showPage('page-content');
+    }
+
+    function openSection(type) {
+      const container = document.getElementById('subjects-container');
+      container.innerHTML = '';
+
+      if (type === 'prayers') {
+        document.getElementById('subjects-header-title').innerText = "🤲 أدعية التسهيل والنجاح";
+        document.getElementById('subjects-header-sub').innerText = "أدعية مستجابة بإذن الله أثناء الدراسة والامتحان";
+        
+        container.innerHTML = `
+          <div class="content-block">
+            <h4>دعاء قبل المذاكرة:</h4>
+            <p>"اللهم إني أسألك فهم النبيين، وحفظ المرسلين، والملائكة المقربين."</p>
+          </div>
+          <div class="content-block">
+            <h4>دعاء عند صعوبة الإجابة:</h4>
+            <p>"اللهم لا سهل إلا ما جعلته سهلاً، وأنت تجعل الحزن إذا شئت سهلاً."</p>
+          </div>
+        `;
+      } else if (type === 'calc') {
+        document.getElementById('subjects-header-title').innerText = "🧮 حاسبة معدل البكالوريا";
+        document.getElementById('subjects-header-sub').innerText = "أدخل علاماتك التقديرية";
+        
+        container.innerHTML = `
+          <div class="content-block">
+            <label>معدل المواد الأساسية:</label>
+            <input type="number" class="calc-input" placeholder="مثال: 14">
+            <label>معدل المواد الثانوية:</label>
+            <input type="number" class="calc-input" placeholder="مثال: 15">
+            <button class="calc-btn" onclick="alert('بالتوفيق والنجاح!')">احسب المعدل</button>
+          </div>
+        `;
+      } else if (type === 'mindmaps-physics') {
+        openLessons('العلوم الفيزيائية');
+        return;
+      } else {
+        document.getElementById('subjects-header-title').innerText = "📁 أرشيف البكالوريات";
+        document.getElementById('subjects-header-sub').innerText = "نماذج محلولة رسمياً";
+        container.innerHTML = '<div class="content-block"><p>جاري رفع المواضيع والتصحيحات النموذجية بصيغة PDF.</p></div>';
+      }
+
+      showPage('page-subjects');
+    }
+
+    function checkAnswer(element, isCorrect) {
+      const options = element.parentElement.querySelectorAll('.quiz-option');
+      options.forEach(opt => opt.classList.remove('correct', 'wrong'));
+
+      if (isCorrect) {
+        element.classList.add('correct');
+      } else {
+        element.classList.add('wrong');
+      }
+    }
+  </script>
+</body>
+</html>
