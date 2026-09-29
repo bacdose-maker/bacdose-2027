@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1457b8">
+  <meta name="description" content="BacDose 2027 — جرعتك للمراجعة والبكالوريا الجزائرية">
+  <title>BacDose 2027 — جرعة بكالوريا</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink: #ff85a2;
+      --purple: #b388ff;
+      --light-bg: #fff0f5;
+    }
+
+    body {
+      background-color: var(--light-bg) !important;
+      font-family: 'Tajawal', sans-serif !important;
+      margin: 0;
+      padding: 12px;
+      padding-bottom: 70px;
+      direction: rtl;
+    }
+
+    /* Top Banner / Hero */
+    .hero, .header, header, .top-banner {
+      background: linear-gradient(135deg, #ff85a2 0%, #b388ff 100%) !important;
+      color: #ffffff !important;
+      border-radius: 20px !important;
+      padding: 22px 15px !important;
+      text-align: center !important;
+      margin-bottom: 20px !important;
+      box-shadow: 0 8px 20px rgba(255, 133, 162, 0.25) !important;
+    }
+
+    .hero h1, header h1 { color: #ffffff !important; font-size: 22px !important; margin-bottom: 6px !important; }
+    .hero p, header p { color: #f3e5f5 !important; font-size: 13px !important; margin: 0 !important; }
+
+    /* Layout & Controls */
+    .controls-panel {
+      margin-bottom: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1.5px solid #ffe1e8;
+      border-radius: 12px;
+      font-family: inherit;
+      box-sizing: border-box;
+      outline: none;
+    }
+
+    .streams-filter {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 5px;
+    }
+
+    .stream-btn {
+      background: #ffffff;
+      border: 1px solid #ffe1e8;
+      padding: 8px 14px;
+      border-radius: 20px;
+      white-space: nowrap;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 13px;
+    }
+
+    .stream-btn.active {
+      background: #ff85a2;
+      color: white;
+      border-color: #ff85a2;
+    }
+
+    /* Cards Structure */
+    .streams, .subject-grid, .quick-grid, .quick-tools {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 12px !important;
+    }
+
+    .card, section, .study-panel, .quiz-card, .subject-card {
+      background-color: #ffffff !important;
+      border: 1.5px solid #ffe1e8 !important;
+      border-radius: 18px !important;
+      padding: 14px 16px !important;
+      margin-bottom: 12px !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      box-shadow: 0 3px 12px rgba(255, 182, 193, 0.12) !important;
+    }
+
+    /* Color Badges & Rules */
+    .bg-pink, .badge-pink, .badge, .coeff-badge {
+      background-color: #ffe4e9 !important;
+      color: #d63384 !important;
+      border-radius: 12px !important;
+      padding: 6px 12px !important;
+      font-weight: bold !important;
+    }
+
+    .bg-blue, .badge-blue {
+      background-color: #e0f7fa !important;
+      color: #00838f !important;
+      border-radius: 12px !important;
+      padding: 6px 12px !important;
+      font-weight: bold !important;
+    }
+
+    .bg-purple, .badge-purple {
+      background-color: #f3e5f5 !important;
+      color: #6a1b9a !important;
+      border-radius: 12px !important;
+      padding: 6px 12px !important;
+      font-weight: bold !important;
+    }
+
+    .bg-yellow, .badge-yellow {
+      background-color: #fffde7 !important;
+      color: #f57f17 !important;
+      border-radius: 12px !important;
+      padding: 6px 12px !important;
+      font-weight: bold !important;
+    }
+
+    .rule {
+      background-color: #fff3cd;
+      border-right: 4px solid #ffc107;
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin-top: 8px;
+    }
+
+    .code {
+      font-family: monospace;
+      background: #f8f9fa;
+      padding: 8px;
+      border-radius: 6px;
+      word-break: break-all;
+      display: block;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+    }
+
+    th, td {
+      border: 1px solid #ffe1e8;
+      padding: 8px;
+      text-align: right;
+      font-size: 13px;
+    }
+
+    th {
+      background-color: #ffe4e9;
+      color: #d63384;
+    }
+
+    /* Quiz Styling */
+    .quiz-option {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin: 6px 0;
+      background: #f8f9fa;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      text-align: right;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .quiz-option.selected { background: #e0f7fa; border-color: #00838f; }
+    .quiz-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .quiz-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+
+    /* Modal & Calculator */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal.open { display: flex; }
+
+    .modal-box {
+      background: white;
+      padding: 20px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 320px;
+    }
+
+    .modal-head { display: flex; justify-content: space-between; align-items: center; }
+
+    .calc-display {
+      width: 100%;
+      height: 40px;
+      font-size: 20px;
+      text-align: left;
+      margin: 10px 0;
+      padding: 5px 10px;
+      box-sizing: border-box;
+    }
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .calc-grid button {
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #f8f9fa;
+      cursor: pointer;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      border-top: 1px solid #ffe1e8;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+      z-index: 999;
+    }
+
+    .bottom-nav a {
+      text-decoration: none;
+      color: #555;
+      font-size: 12px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero" id="home">
+    <h1>BacDose 2027</h1>
+    <p>جرعتك للمراجعة والبكالوريا الجزائرية</p>
+  </header>
+
+  <div class="controls-panel">
+    <div class="search-bar">
+      <input type="text" id="globalSearch" placeholder="🔍 ابحث عن درس، كلمة، أو مفهوم...">
+    </div>
+    
+    <div class="streams-filter">
+      <button class="stream-btn active" data-stream="all">الكل</button>
+      <button class="stream-btn" data-stream="literature">آداب وفلسفة</button>
+      <button class="stream-btn" data-stream="languages">لغات أجنبية</button>
+      <button class="stream-btn" data-stream="science">علوم تجريبية</button>
+      <button class="stream-btn" data-stream="math">رياضيات</button>
+      <button class="stream-btn" data-stream="tech">تقني رياضي</button>
+      <button class="stream-btn" data-stream="management">تسيير واقتصاد</button>
+    </div>
+
+    <div style="display: flex; gap: 8px;">
+      <button id="openCalc" class="bg-pink" style="border:none; cursor:pointer; flex:1;">🧮 الحاسبة</button>
+      <button id="installBtn" class="bg-blue" style="border:none; cursor:pointer; display:none; flex:1;">📲 تثبيت التطبيق</button>
+    </div>
+  </div>
+
+  <main id="library">
+    <section id="philo">
+      <h2>🧠 ملخص الفلسفة — 3 آداب وفلسفة</h2>
+      <h3>المحور الأول: في إدراك العالم الخارجي والبحث عن الحقيقة</h3>
+
+      <div class="card">
+        <h4>1️⃣ الإحساس والإدراك — هل يمكن التمييز بينهما؟</h4>
+        <p><b>الإحساس:</b> رد فعل عضوي واعٍ ناتج عن إثارة عضو حسي.</p>
+        <p><b>الإدراك:</b> فعل ينظم به الفرد إحساساته الحاضرة ويكملها بالصور والذكريات.</p>
+        <p><b>الإشكالية:</b> هل الإحساس والإدراك عمليتان منفصلتان أم متصلتان؟</p>
+        <p><b>التمييز:</b> الإحساس استقبال للمنبه، والإدراك تنظيم وفهم هذا المنبه بواسطة العقل. ديكارت: «الحواس تخدعنا».</p>
+        <p><b>عدم الفصل:</b> الإدراك يحتاج إلى المعطيات التي تقدمها الحواس.</p>
+        <p><b>التركيب:</b> مختلفان من حيث الوظيفة، لكنهما متكاملان.</p>
+        <p class="rule">⭐ الإحساس = استقبال → الإدراك = تنظيم وفهم.</p>
+      </div>
+
+      <div class="card">
+        <h4>2️⃣ هل الإدراك عقلي أم حسي؟</h4>
+        <p><b>الإدراك عقلي:</b> ديكارت وألان؛ الحواس قد تخدع والعقل يصحح وينظم معطياتها.</p>
+        <p><b>الإدراك حسي:</b> جون لوك، دافيد هيوم، ج. س. مل؛ المعرفة تبدأ من التجربة والحواس.</p>
+        <p><b>التركيب:</b> الإدراك يعتمد على الحواس والعقل والخبرة معًا.</p>
+        <p class="rule">⭐ العقليون → العقل | الحسيون → التجربة والحواس | التركيب → العقل + الحواس.</p>
+      </div>
+
+      <div class="card">
+        <h4>3️⃣ هل الإدراك ذاتي أم موضوعي؟</h4>
+        <p><b>العوامل الذاتية:</b> الانتباه، الرغبة، الاهتمام، الخبرة، الحالة الصحية، الثقافة والمعتقدات.</p>
+        <p><b>العوامل الموضوعية:</b> التقارب، التشابه، الاتصال، الإغلاق، الشكل والأرضية.</p>
+        <p><b>التوفيق:</b> الإدراك نتيجة تفاعل الذات المدركة مع الموضوع المدرك. ميرلوبونتي: الإدراك يربط الإنسان بمحيطه.</p>
+        <p class="rule">⭐ الإدراك = تفاعل الذات والموضوع.</p>
+      </div>
+
+      <div class="card">
+        <h4>4️⃣ اللغة والفكر — اتصال أم انفصال؟</h4>
+        <p><b>اللغة:</b> مجموعة إشارات للتواصل والتعبير. <b>الفكر:</b> مجموعة التصورات والمدركات العقلية.</p>
+        <p><b>الاتصال:</b> الإنسان يفكر بواسطة اللغة. هيجل: «اللغة وعاء الفكر». ميرلوبونتي: «الفكر لا يوجد خارج الكلمات».</p>
+        <p><b>الانفصال:</b> الفكر أوسع من اللغة. برغسون: «اللغة عاجزة عن مسايرة ديمومة الفكر».</p>
+        <p><b>التركيب:</b> تكامل بين اللغة والفكر.</p>
+      </div>
+
+      <div class="card">
+        <h4>5️⃣ الشعور واللاشعور — هل الحياة النفسية شعورية فقط؟</h4>
+        <p><b>الشعور:</b> إدراك الإنسان المباشر لأحواله النفسية. <b>اللاشعور:</b> نشاطات نفسية تؤثر في السلوك دون أن تبلغ الشعور.</p>
+        <p><b>الشعور:</b> ديكارت وبرغسون؛ «كل ما هو نفسي شعوري».</p>
+        <p><b>اللاشعور:</b> فرويد؛ الأحلام، زلات اللسان، بعض مظاهر النسيان وبعض الأعراض النفسية. اعتمد على التحليل النفسي والتداعي الحر.</p>
+        <p><b>التركيب:</b> الحياة النفسية تقوم على الشعور واللاشعور معًا.</p>
+      </div>
+
+      <div class="card">
+        <h4>6️⃣ الذاكرة والخيال — هل الذاكرة فيزيولوجية أم نفسية؟</h4>
+        <p><b>الذاكرة:</b> وظيفة نفسية تتمثل في إعادة بناء حالة شعورية ماضية والتعرف عليها. <b>الخيال:</b> ملكة تركيب صور واقعية وغير موجودة.</p>
+        <p><b>الاتجاه العضوي:</b> الذكريات ترتبط بالدماغ. ريبو: «الذاكرة وظيفة عامة يقوم بها الجهاز العصبي».</p>
+        <p><b>الاتجاه النفسي:</b> برغسون؛ الذاكرة ظاهرة نفسية ويميز بين ذاكرة العادة والذاكرة النفسية.</p>
+        <p><b>التركيب:</b> عوامل فيزيولوجية + نفسية + اجتماعية.</p>
+        <p class="rule">⭐ ريبو → بيولوجية | برغسون → نفسية | التركيب → عوامل متعددة.</p>
+      </div>
+
+      <div class="card">
+        <h4>7️⃣ الإبداع والخيال — هل الإبداع نفسي أم اجتماعي؟</h4>
+        <p><b>الإبداع:</b> إنتاج شيء جديد أو إيجاد حلول جديدة.</p>
+        <p><b>العوامل النفسية:</b> الإرادة، الفضول، الاهتمام، الذكاء، الذاكرة، الخيال، التأمل. ويربط فرويد الإبداع بالدوافع النفسية اللاشعورية والإعلاء.</p>
+        <p><b>العوامل الاجتماعية:</b> يرتبط بحاجات المجتمع ودرجة تطوره. دوركايم. الحاجة إلى النقل → السيارة والقطار والطائرة؛ الحاجة إلى العلاج → الأدوية والأجهزة الطبية.</p>
+        <p><b>التركيب:</b> تفاعل العوامل النفسية والاجتماعية.</p>
+      </div>
+
+      <div class="card">
+        <h4>8️⃣ العادة والإرادة — هل العادة إيجابية أم سلبية؟</h4>
+        <p><b>العادة:</b> قدرة مكتسبة على أداء عمل بطريقة آلية نتيجة الممارسة. <b>الإرادة:</b> القصد إلى القيام بالفعل أو تركه.</p>
+        <p><b>الإيجابيات:</b> المهارة، السرعة والسهولة، الاقتصاد في الجهد والوقت، تنظيم السلوك. ألان: العادة تمنح الجسم رشاقة وسلاسة.</p>
+        <p><b>السلبيات:</b> الركود، ضعف المبادرة والإرادة، التعود على السلوكيات السيئة. روسو: «خير عادة للإنسان أن لا يعتاد شيئًا».</p>
+        <p><b>التركيب:</b> العادة قد تكون أداة للحياة أو عائقًا لها حسب استعمالها.</p>
+      </div>
+
+      <h3>المحور الثاني: الأخلاق</h3>
+      <div class="card">
+        <h4>9️⃣ الأخلاق — مطلقة أم نسبية؟</h4>
+        <p><b>الأخلاق:</b> مجموعة القيم التي تهدف إلى تقويم السلوك البشري والارتقاء به.</p>
+        <p><b>المطلقة:</b> القيم مرتبطة بمبادئ ثابتة؛ الدين والعقل. كانط يمثل أخلاق الواجب، وأفلاطون يرى الخير قيمة عليا.</p>
+        <p><b>النسبية:</b> القيم تتأثر بالمجتمع والمنفعة والظروف. دوركايم: المجتمع مصدر السلطة الأخلاقية.</p>
+        <p><b>التركيب:</b> تفاعل الدين والعقل والمجتمع.</p>
+      </div>
+
+      <div class="card">
+        <h4>🔟 العدل والحقوق والواجبات — أيهما أسبق؟</h4>
+        <p><b>العدل:</b> ما هو عادل ومنصف. <b>الحق:</b> ما يثبت للإنسان ويستحقه. <b>الواجب:</b> قاعدة أو إلزام.</p>
+        <p><b>أولوية الحق:</b> الحقوق الطبيعية مثل الحياة والتفكير والملكية؛ جون لوك.</p>
+        <p><b>أولوية الواجب:</b> كانط؛ الإنسان يقوم بالواجب من أجل الواجب.</p>
+        <p><b>التركيب:</b> العدل يقوم على التوازن بين الحقوق والواجبات.</p>
+        <p class="rule">⭐ الحق دون واجب = اختلال | الواجب دون حق = ظلم | العدل = التوازن.</p>
+      </div>
+
+      <div class="card">
+        <h4>1️⃣1️⃣ الأنظمة السياسية — الحكم الفردي أم الجماعي؟</h4>
+        <p><b>الدولة:</b> ظاهرة اجتماعية سياسية، وشخصية معنوية تتكون من مؤسسات لها حقوق وعليها واجبات.</p>
+        <p><b>العناصر:</b> الشعب + الإقليم + السلطة. والسلطة: تشريعية + تنفيذية + قضائية.</p>
+        <p><b>الحكم الجماعي/الديمقراطي:</b> حكم الشعب، مباشر أو نيابي، ويرتبط بالحرية والمساواة والمشاركة.</p>
+        <p><b>الحكم الفردي:</b> تتركز السلطة في يد فرد أو جهة محددة؛ من أشكاله الملكي والدكتاتوري والثيوقراطي.</p>
+        <p><b>التركيب:</b> الدولة ضرورية لتنظيم المجتمع، ويعرض الملخص الحكم الجماعي والشورى كوسيلة للمشاركة وخدمة المصلحة العامة.</p>
+      </div>
+
+      <div class="card">
+        <h4>🧠 خلاصة الفلسفة</h4>
+        <table>
+          <tr><th>الدرس</th><th>السؤال</th><th>المواقف</th></tr>
+          <tr><td>الإحساس والإدراك 1</td><td>هل يمكن الفصل؟</td><td>تمييز / اتصال</td></tr>
+          <tr><td>الإحساس والإدراك 2</td><td>عقلي أم حسي؟</td><td>العقل / الحواس</td></tr>
+          <tr><td>الإحساس والإدراك 3</td><td>ذاتي أم موضوعي؟</td><td>الذات / الموضوع / التفاعل</td></tr>
+          <tr><td>اللغة والفكر</td><td>اتصال أم انفصال؟</td><td>اتصال / انفصال / تكامل</td></tr>
+          <tr><td>الشعور واللاشعور</td><td>هل الحياة النفسية شعورية؟</td><td>الشعور / اللاشعور</td></tr>
+          <tr><td>الذاكرة والخيال</td><td>فيزيولوجية أم نفسية؟</td><td>ريبو / برغسون</td></tr>
+          <tr><td>الإبداع والخيال</td><td>نفسي أم اجتماعي؟</td><td>نفسي / اجتماعي / تفاعل</td></tr>
+          <tr><td>العادة والإرادة</td><td>إيجابية أم سلبية؟</td><td>إيجابيات / سلبيات</td></tr>
+          <tr><td>الأخلاق</td><td>مطلقة أم نسبية؟</td><td>مطلقة / نسبية</td></tr>
+          <tr><td>الحقوق والواجبات</td><td>الحق أم الواجب؟</td><td>الحق / الواجب / التوازن</td></tr>
+          <tr><td>الأنظمة السياسية</td><td>فردي أم جماعي؟</td><td>فردي / جماعي</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <section id="french">
+      <h2>🇫🇷 ملخص الفرنسية — آداب وفلسفة</h2>
+      <div class="card">
+        <h3>Projet 1 — Le récit historique</h3>
+        <p><b>الهدف:</b> عرض أحداث تاريخية بترتيب زمني واضح.</p>
+        <p><b>المؤشرات:</b> Dates، Lieux، Personnes، Témoignage، مؤشرات الزمن والمكان.</p>
+        <p><b>الأزمنة:</b> Présent de narration للحيوية؛ Imparfait للوصف؛ Passé simple للحدث.</p>
+        <p><b>الروابط:</b> Phrase déclarative؛ La cause: parce que – car – puisque.</p>
+        <p><b>Expression écrite:</b> Introduction → Déroulement: d’abord → ensuite → enfin → Conclusion.</p>
+        <p><b>Thème constat:</b> نفس الموضوع مع معلومة جديدة. <b>Thème dérivé:</b> يتغير الموضوع من جملة إلى أخرى.</p>
+      </div>
+      <div class="card">
+        <h3>Projet 2 — Le texte argumentatif</h3>
+        <p>نص هدفه عرض رأي والدفاع عنه بالحجج.</p>
+        <p><b>البنية:</b> Introduction → Thèse + arguments → Antithèse + arguments → Conclusion.</p>
+        <p><b>أفعال الرأي:</b> penser – estimer – soutenir – voir – refuser – espérer.</p>
+        <p><b>عبارات الرأي:</b> À mon avis – Personnellement – Selon moi – D’après moi.</p>
+        <p><b>Cause:</b> parce que – car – puisque – grâce à.</p>
+        <p><b>Conséquence:</b> donc – ainsi – alors – si bien que – de sorte que.</p>
+        <p><b>Opposition:</b> mais – pourtant – néanmoins – cependant – toutefois – en revanche.</p>
+        <p><b>Concession:</b> Oui… mais…</p>
+        <p><b>Modalité:</b> Falloir = ضرورة؛ Devoir = وجوب؛ Pouvoir = إمكانية.</p>
+      </div>
+      <div class="card">
+        <h3>Projet 3 — L’appel</h3>
+        <p>L’appel = texte exhortatif، أي نص حثي يدفع القارئ إلى القيام بشيء.</p>
+        <p><b>المكونات:</b> Partie expositive → Partie centrale → Partie finale exhortative.</p>
+        <p><b>L’impératif:</b> أمر، نصيحة، توصية، دعوة.</p>
+        <p><b>Verbes performatifs:</b> appeler – prier – inviter – conseiller – exhorter – encourager – demander.</p>
+        <p><b>Expression écrite:</b> Introduction → Argumentation → Appel.</p>
+      </div>
+      <div class="card">
+        <h3>Synthèse / Résumé</h3>
+        <p>La synthèse: جمع العناصر المهمة من عدة وثائق في نص واحد.</p>
+        <p>Le résumé: استخراج الأفكار الأساسية واختصارها.</p>
+      </div>
+      <div class="card">
+        <h3>La condition</h3>
+        <p class="rule">Si + présent → futur<br>Si + imparfait → conditionnel présent<br>Si + plus-que-parfait → conditionnel passé</p>
+      </div>
+      <div class="card">
+        <h3>La voix active / passive</h3>
+        <p>Active: Sujet + verbe + objet.</p>
+        <p>Passive: Objet + être + participe passé + par + sujet.</p>
+      </div>
+      <div class="card">
+        <h3>Le participe passé</h3>
+        <p class="code">ouvrir→ouvert | dire→dit | s'enfuir→enfui | interdire→interdit | dormir→dormi | lire→lu | mentir→menti | venir→venu | servir→servi | sortir→sorti | tenir→tenu | rire→ri | cueillir→cueilli | faire→fait | mourir→mort | plaire→plu | courir→couru | taire→tu | faillir→failli | recevoir→reçu | conduire→conduit | devoir→dû | écrire→écrit | vouloir→voulu | pouvoir→pu | croire→cru | savoir→su | prévoir→prévu | prendre→pris | peindre→peint | coudre→cousu | mettre→mis | résoudre→résolu | naître→né | battre→battu | vivre→vécu | suivre→suivi | connaître→connu</p>
+      </div>
+      <div class="card">
+        <h3>Discours direct / indirect</h3>
+        <table>
+          <tr><th>Direct</th><th>Indirect</th></tr>
+          <tr><td>Présent</td><td>Imparfait</td></tr>
+          <tr><td>Futur simple</td><td>Conditionnel présent</td></tr>
+          <tr><td>Passé composé</td><td>Plus-que-parfait</td></tr>
+          <tr><td>Impératif</td><td>Infinitif / Subjonctif</td></tr>
+        </table>
+        <p>dernier→précédent | prochain→suivant | demain→le lendemain | aujourd'hui→ce jour-là | hier→la veille | ici→là | maintenant→alors.</p>
+      </div>
+      <div class="card">
+        <h3>Temps & But</h3>
+        <p>avant – jusqu'à ce que – quand – pendant que – lorsque – au moment où – aussitôt que – dès que – après – une fois.</p>
+        <p>pour – afin de – de façon à؛ de peur de – de crainte de.</p>
+      </div>
+      <div class="card">
+        <h3>⭐ خلاصة الفرنسية</h3>
+        <p>Projet 1 → Récit historique | Projet 2 → Texte argumentatif | Projet 3 → L'appel</p>
+        <p>Cause → parce que / car / puisque | Conséquence → donc / ainsi | Opposition → mais / pourtant / cependant | Opinion → à mon avis / selon moi | But → pour / afin de | Condition → Si + présent → futur | Passive → être + participe passé | Appel → impératif + verbes performatifs</p>
+      </div>
+    </section>
+
+    <section id="english">
+      <h2>🇬🇧 ملخص اللغة الإنجليزية — جميع الشعب</h2>
+      <div class="card">
+        <h3>1. Condition</h3>
+        <p>Type 0: If + Present Simple → Present Simple.</p>
+        <p>Type 1: If + Present Simple → will + verb.</p>
+        <p>Type 2: If + Past Simple → would + verb.</p>
+        <p>Type 3: If + Past Perfect → would have + Past Participle.</p>
+      </div>
+      <div class="card">
+        <h3>2–7. أدوات أساسية</h3>
+        <p><b>Condition:</b> providing that – provided that – as long as – so long as – only if.</p>
+        <p><b>Wishes:</b> wish + Past Simple (الحاضر)؛ wish + Past Perfect (الماضي)؛ wish + would + verb (المستقبل/الانزعاج). If only = Wish. It's time / high time / about time + Past Simple.</p>
+        <p><b>Advice:</b> should – ought to – had better + verb.</p>
+        <p><b>Result:</b> so + adjective + that؛ such + noun phrase + that؛ therefore – thus – as a result – consequently – as a consequence.</p>
+        <p><b>Cause:</b> because/since/as + sentence؛ because of/due to/owing to/for + noun.</p>
+        <p><b>Modals:</b> must ضرورة قوية؛ mustn't ممنوع؛ have to ضرورة؛ don't have to/needn't لا ضرورة؛ should/ought to/had better نصيحة؛ could/might احتمال ضعيف؛ may/can احتمال؛ will certainly تأكيد قوي.</p>
+      </div>
+      <div class="card">
+        <h3>8–13. ING + الأفعال + الكمية + How</h3>
+        <p>-ing مع الأزمنة المستمرة، Gerund، وكصفة.</p>
+        <p><b>Stative:</b> like – love – hate – believe – agree – prefer – enjoy؛ غالبًا Present Simple.</p>
+        <p><b>Action:</b> go – stop – come – start – write – win.</p>
+        <p><b>Prefix:</b> agree→disagree، moral→immoral، legal→illegal، fair→unfair، direct→indirect، responsible→irresponsible.</p>
+        <p><b>Suffix:</b> stupid→stupidity، spice→spicy.</p>
+        <p><b>Quantifiers:</b> many/few للمعدود؛ much/little لغير المعدود؛ a lot of/some للنوعين؛ enough/not enough؛ too much/too many/too little/too few.</p>
+        <p><b>Used to:</b> used to + verb. <b>Used for:</b> used for + verb-ing.</p>
+        <p><b>How:</b> tall, long, high, far, fast, deep, wide, much.</p>
+      </div>
+      <div class="card">
+        <h3>14–21. Content/Structure + Comparison + Purpose + Concession</h3>
+        <p><b>Content words:</b> الأفعال الرئيسية، الأسماء، الصفات، الظروف وبعض الضمائر وأدوات السؤال.</p>
+        <p><b>Structure words:</b> الضمائر، حروف الجر، أدوات التعريف، أدوات الربط، الأفعال المساعدة.</p>
+        <p><b>Comparatives:</b> adjective+er+than؛ more+adjective+than؛ as+adjective+as؛ less+adjective+than.</p>
+        <p><b>Superlatives:</b> the+adjective+est؛ the most+adjective؛ the least+adjective.</p>
+        <table>
+          <tr><th>الصفة</th><th>المقارنة</th><th>التفضيل</th></tr>
+          <tr><td>good/well</td><td>better</td><td>the best</td></tr>
+          <tr><td>bad</td><td>worse</td><td>the worst</td></tr>
+          <tr><td>far</td><td>farther</td><td>the farthest</td></tr>
+          <tr><td>many/much</td><td>more</td><td>the most</td></tr>
+          <tr><td>little</td><td>less</td><td>the least</td></tr>
+        </table>
+        <p><b>Similarity:</b> like – the same as – such as – both – similar to – too.</p>
+        <p><b>Difference:</b> unlike – whereas – while – but – different from – in contrast to.</p>
+        <p><b>Unless:</b> Unless = If not؛ Unless + Present → Future.</p>
+        <p><b>Articles:</b> a/an للمفرد المعدود حسب الصوت؛ the للمحدد/المعروف؛ Zero Article للاستعمالات العامة المذكورة.</p>
+        <p><b>Purpose:</b> to/so as to/in order to + verb؛ so that/in order that + sentence. النفي: not to/so as not to/in order not to.</p>
+        <p><b>Concession:</b> although/even though/though + sentence؛ despite/in spite of + noun/ing؛ despite the fact that + sentence.</p>
+      </div>
+      <div class="card">
+        <h3>22–30. Plural + Silent Letters + Word Formation + Questions + Stress</h3>
+        <p>الجمع: s؛ وبعض النهايات s/ch/sh/x/z → es؛ consonant+y → ies؛ vowel+y → s. أمثلة F/FE: wife→wives، leaf→leaves، half→halves، مع استثناءات مثل chief→chiefs. الشاذ: foot→feet، tooth→teeth، goose→geese، man→men، ox→oxen، child→children.</p>
+        <p><b>Silent Letters:</b> knife, psychology, department, lamb, should, half, walk, island, write, castle, Wednesday, foreign, autumn, honest, high.</p>
+        <p><b>Word formation:</b> -en: wide→widen، bright→brighten، short→shorten. Self: myself…themselves.</p>
+        <p><b>Like/Dislike:</b> enjoy/dislike/don't mind/avoid + ing؛ like/love/hate/prefer + ing أو to+verb؛ would rather + verb.</p>
+        <p><b>Each other / One another:</b> للتبادل بين الأشخاص.</p>
+        <p><b>Questions:</b> Reference = الجواب واضح في النص؛ Inference = يحتاج استنتاجًا.</p>
+        <p><b>Stress:</b> النبر على مقطع معين؛ ومن القواعد المذكورة أن الاسم/الصفة/الظرف غالبًا على الأول في كلمتين مقطعيتين والفعل غالبًا على الثاني.</p>
+        <p><b>Final S:</b> /s/ أو /iz/ أو /z/. <b>Final ED:</b> /t/ أو /id/ أو /d/ حسب الصوت السابق.</p>
+      </div>
+      <div class="card">
+        <h3>31. Active & Passive Voice</h3>
+        <p>Passive = Object + be + Past Participle.</p>
+        <table>
+          <tr><th>الزمن</th><th>الصيغة</th></tr>
+          <tr><td>Present Simple</td><td>is/am/are + PP</td></tr>
+          <tr><td>Past Simple</td><td>was/were + PP</td></tr>
+          <tr><td>Present Perfect</td><td>has/have been + PP</td></tr>
+          <tr><td>Future</td><td>will be + PP</td></tr>
+          <tr><td>Modal</td><td>can/must/should + be + PP</td></tr>
+          <tr><td>Present Continuous</td><td>is/am/are being + PP</td></tr>
+          <tr><td>Past Continuous</td><td>was/were being + PP</td></tr>
+          <tr><td>Past Perfect</td><td>had been + PP</td></tr>
+          <tr><td>Future Perfect</td><td>will have been + PP</td></tr>
+          <tr><td>Conditional</td><td>would be + PP</td></tr>
+          <tr><td>Conditional Perfect</td><td>would have been + PP</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3>32. Pronouns</h3>
+        <p><b>Subject:</b> I – you – he – she – it – we – they.</p>
+        <p><b>Object:</b> me – you – him – her – it – us – them.</p>
+      </div>
+      <div class="card">
+        <h3>33–40. Reported Speech</h3>
+        <p>إذا كان فعل النقل في الحاضر يمكن أن تبقى الأزمنة؛ إذا كان في الماضي تتغير.</p>
+        <table>
+          <tr><th>Direct</th><th>Reported</th></tr>
+          <tr><td>Present Simple</td><td>Past Simple</td></tr>
+          <tr><td>Past Simple</td><td>Past Perfect</td></tr>
+          <tr><td>Present Perfect</td><td>Past Perfect</td></tr>
+          <tr><td>Present Continuous</td><td>Past Continuous</td></tr>
+          <tr><td>Past Continuous</td><td>Past Perfect Continuous</td></tr>
+          <tr><td>Past Perfect</td><td>Past Perfect</td></tr>
+          <tr><td>Present Perfect Continuous</td><td>Past Perfect Continuous</td></tr>
+        </table>
+        <p><b>Modals:</b> will→would؛ can→could؛ must→had to؛ may→might؛ should→should؛ ought to→ought to.</p>
+        <p><b>Time/Place:</b> now→then؛ today→that day؛ tonight→that night؛ here→there؛ this→that؛ these→those؛ tomorrow→the following day؛ next week→the following week؛ yesterday→the previous day؛ last week→the previous week؛ two weeks ago→two weeks before.</p>
+        <p><b>Questions:</b> WH تبقى أداة السؤال ولا do/does/did؛ Yes/No → if.</p>
+        <p><b>Commands:</b> told/ordered/asked + object + to + verb.</p>
+        <p><b>Advice:</b> advised + object + to + verb.</p>
+        <p><b>Suggestions:</b> suggested + verb-ing.</p>
+        <p>agreed + to + verb | apologized for + ing | congratulated + object + on + ing | denied + ing | invited + object + to + verb | offered + to + verb | promised + to + verb.</p>
+      </div>
+      <div class="card">
+        <h3>41–46. How to Ask Questions</h3>
+        <p><b>WH + Auxiliary + Subject + Verb?</b></p>
+        <table>
+          <tr><th>الأداة</th><th>الاستعمال</th></tr>
+          <tr><td>Who</td><td>شخص</td></tr>
+          <tr><td>What</td><td>شيء/حيوان</td></tr>
+          <tr><td>Whom</td><td>مفعول به</td></tr>
+          <tr><td>When</td><td>متى</td></tr>
+          <tr><td>Where</td><td>أين</td></tr>
+          <tr><td>Why</td><td>السبب</td></tr>
+          <tr><td>What ... for</td><td>الهدف</td></tr>
+          <tr><td>Whose</td><td>الملكية</td></tr>
+          <tr><td>Which</td><td>الاختيار</td></tr>
+          <tr><td>How</td><td>كيف</td></tr>
+        </table>
+        <p><b>How often:</b> التكرار | <b>How long:</b> المدة | <b>How many:</b> المعدود | <b>How much:</b> غير المعدود.</p>
+      </div>
+      <div class="card">
+        <h3>⭐ الخلاصة السريعة</h3>
+        <p>because + sentence | because of + noun</p>
+        <p>so + adjective + that | such + noun + that</p>
+        <p>to/in order to + verb | so that + sentence</p>
+        <p>although + sentence | despite + noun/ing</p>
+        <p>should / ought to / had better + verb</p>
+        <p>T0 → Present + Present | T1 → Present + will | T2 → Past + would | T3 → Past Perfect + would have + PP</p>
+        <p>Passive → be + Past Participle | Reported Speech → تغيير الزمن عند فعل النقل في الماضي.</p>
+      </div>
+    </section>
+
+    <section id="math">
+      <h2>📐 ملخص الرياضيات — الدوال والمتتاليات والموافقات</h2>
+      <div class="card">
+        <h3>أولًا: المتتاليات العددية</h3>
+        <p>نرمز إلى المتتاليات بـ (u_n)، (v_n)، (w_n). u_n هو الحد العام.</p>
+        <p>تعريف بعبارة الحد العام: u_n=f(n). وبعلاقة تراجعية: u_{n+1}=f(u_n).</p>
+        <p>u_{n+1}=a u_n → هندسية أساسها q=a.</p>
+        <p>u_{n+1}=u_n+b → حسابية أساسها r=b.</p>
+        <p>u_{n+1}-u_n&gt;0 متزايدة؛ =0 ثابتة؛ &lt;0 متناقصة.</p>
+      </div>
+      <div class="card">
+        <h3>ثانيًا: الموافقات في Z</h3>
+        <p>a≡b [n] إذا n يقسم (a-b)، أي لهما نفس الباقي في القسمة على n.</p>
+        <p>الخواص: الانعكاسية، التبديلية، الجمع، الطرح، الضرب، القوى.</p>
+        <p>a≡-1 [n] → a≡n-1 [n]. ولحساب بواقي القوى ندرس تسلسل البواقي حتى يظهر التكرار.</p>
+      </div>
+      <div class="card">
+        <h3>ثالثًا: الدوال وكثيرات الحدود</h3>
+        <p>f'(x)&gt;0 → متزايدة؛ f'(x)&lt;0 → متناقصة.</p>
+        <p><b>المماس:</b> y=f'(x₀)(x-x₀)+f(x₀).</p>
+        <p>من نقطتين على المماس: a=(y_M-y_N)/(x_M-x_N)، ثم b=y_N-a x_N، ومنه y=ax+b.</p>
+        <p>الوضع النسبي يدرس بإشارة f(x)-y: موجب فوق المماس؛ سالب تحته؛ صفر تقاطع.</p>
+      </div>
+      <div class="card">
+        <h3>رابعًا: نقطة الانعطاف</h3>
+        <p>نبحث عن f''(x)=0 ثم تغير الإشارة. إذا تغيرت الإشارة عند x₀ تكون E(x₀;f(x₀)) نقطة انعطاف.</p>
+        <p>لـ f(x)=ax³+bx²+cx+d: f'(x)=3ax²+2bx+c؛ f''(x)=6ax+2b؛ x₀=-b/(3a).</p>
+      </div>
+      <div class="card">
+        <h3>خامسًا: التقاطع والتمثيل البياني</h3>
+        <p>مع محور التراتيب: x=0 → A(0;f(0)). مع محور الفواصل: f(x)=0 → نقاط التقاطع.</p>
+        <p>للرسم: مجموعة التعريف، الصور، جدول التغيرات، النهايات والمقاربون عند الحاجة.</p>
+      </div>
+      <div class="card">
+        <h3>سادسًا: الدالة التناظرية (الكسرية)</h3>
+        <p>f(x)=(ax+b)/(cx+d)، مع ad-cb≠0 وc≠0. مجموعة التعريف R\{-d/c}.</p>
+        <p>المقارب العمودي x=-d/c. المقارب الأفقي y=a/c، وإذا a=0 فـ y=0، وفي الشكل f(x)=k+λ/(cx+d) يكون y=k.</p>
+        <p>f'(x)=(ad-cb)/(cx+d)²؛ إشارة المشتقة تعتمد على ad-cb.</p>
+        <p>مع محور التراتيب: f(0)=b/d إذا d≠0. مع محور الفواصل: x=-b/a إذا a≠0.</p>
+        <p>المماس: y=f'(x₀)(x-x₀)+f(x₀).</p>
+      </div>
+    </section>
+
+    <section id="islamic">
+      <h2>🕌 التربية الإسلامية — جميع الشعب</h2>
+      <div class="card">
+        <p>هذا القسم مخصص لملخص التربية الإسلامية الذي تم إعداده سابقًا لجميع الشعب في مشروع BacDose.</p>
+        <p class="rule">📌 يُحافظ على محتوى الملخص السابق دون إضافة محتوى جديد غير موجود في النسخة المعتمدة.</p>
+      </div>
+    </section>
+
+    <section id="social">
+      <h2>🌍 الاجتماعيات — جميع الشعب</h2>
+      <div class="card">
+        <h3>📍 الجغرافيا — الوحدة الأولى: واقع الاقتصاد العالمي</h3>
+        <h4>01. إشكالية التقدم والتخلف</h4>
+        <p><b>معايير تصنيف العالمين — اقتصادية:</b> قيمة الناتج الوطني والداخلي الخام؛ نسبة المساهمة في المبادلات التجارية العالمية؛ طبيعة الصناعة (استخراجية - تحويلية)؛ نسبة توزيع اليد العاملة؛ مستوى وحالة الهياكل القاعدية.</p>
+        <p><b>اجتماعية وثقافية:</b> مؤشر التنمية البشرية (1-0)؛ المستوى المعيشي؛ أمد الحياة؛ نسبة الوفيات عند الولادة؛ نسبة التمدن؛ نسبة التمدرس؛ الإصدارات العلمية.</p>
+        <p><b>سياسية:</b> مدى تجسيد النظام الديمقراطي؛ الاستقرار السياسي والأمني.</p>
+        <p><b>عوامل التقدم:</b> الاستفادة من الحركة الاستعمارية؛ الاستقرار السياسي والأمني بعد ح ع 2؛ نجاح سياسة التكتلات السياسية والاقتصادية؛ وقوع دوله في الجزء الشمالي ذي المناخ المعتدل؛ طبيعة أنظمة الحكم الديمقراطية؛ تشجيع ودعم التعليم والبحث العلمي.</p>
+        <p><b>عوامل التخلف:</b> تضرر دوله من الحركة الاستعمارية؛ الاضطراب السياسي والأمني والحروب؛ فشل سياسة التكتلات؛ وقوع دوله في الجزء الجنوبي ذي المناخ الحار؛ طبيعة أنظمة الحكم الديكتاتورية؛ عدم الاهتمام بالتعليم والبحث العلمي.</p>
+        <p><b>مظاهر التقدم:</b> تحقيق الاكتفاء والأمن الغذائي؛ 80% من المبادلات التجارية العالمية؛ 80% من الناتج العالمي الخام؛ رفاهية المجتمع وتحسن المستوى المعيشي؛ مصدر القرار السياسي والاقتصادي؛ التحكم في التكنولوجيا ووسائل الإعلام؛ 90% من الإنتاج الصناعي العالمي.</p>
+        <p><b>مظاهر التخلف:</b> فشل تحقيق الاكتفاء والأمن الغذائي؛ 20% من المبادلات التجارية العالمية؛ 20% من الناتج العالمي الخام؛ تدهور الأوضاع الاجتماعية؛ عدم القدرة على اتخاذ القرارات السيادية؛ عدم التحكم في التكنولوجيا ووسائل الإعلام؛ 10% من الإنتاج الصناعي العالمي.</p>
+        <p><b>مشاكل التنمية:</b> طبيعة السطح (الصحاري، الغابات الاستوائية والمدارية، الجبال...)؛ قساوة المناخ والكوارث الطبيعية؛ المديونية؛ النشاط الصناعي الاستخراجي وغياب الصناعات التحويلية؛ ضعف الإنتاج الصناعي والزراعي؛ التخلف التكنولوجي والتقني والعلمي؛ ضعف التكتلات الاقتصادية والسياسية.</p>
+        <p><b>الحلول:</b> تفعيل التكتلات؛ الاستغلال الأمثل للموارد الطبيعية وعائداتها؛ تنويع الاقتصاد وعدم الاعتماد على المورد الواحد؛ سياسة زراعية وصناعية رشيدة لتحقيق الاكتفاء الذاتي؛ علاقات اقتصادية مع العالم المتقدم قائمة على المنفعة المتبادلة.</p>
+      </div>
+
+      <div class="card">
+        <h3>02. المبادلات والتنقلات</h3>
+        <p><b>أسعار المواد الاستراتيجية:</b> العرض والطلب؛ الجودة والنوعية؛ الشركات الاحتكارية (الشقيقات السبع - الكارتل العالمي)؛ الصراعات والنزاعات؛ التقلبات المناخية؛ تكاليف النقل.</p>
+        <p><b>إنتاج المواد الغذائية:</b> التربة الخصبة؛ المياه؛ رؤوس الأموال؛ الأسمدة والمبيدات؛ الإرادة السياسية؛ المناخ الملائم.</p>
+        <p><b>أهمية البترول والغاز:</b> من أكثر المواد استهلاكًا؛ قابلة للتخزين؛ عائدات مالية ضخمة؛ تدخل في الأنشطة الصناعية؛ تساهم في التنمية.</p>
+        <p><b>أهداف الأوبك:</b> توحيد سياسات النفط؛ حماية مصالح الدول والحفاظ على الأسعار؛ محاربة الاحتكار؛ التعاون التقني؛ تحديد سقف الإنتاج وحصص الأعضاء.</p>
+        <p><b>مشاكل الأوبك:</b> عدم احترام سقف الإنتاج؛ انسحاب بعض الدول؛ منافسة المنتجين غير الأعضاء؛ التوجه نحو الطاقة البديلة؛ ضغوط القوى الكبرى وشركاتها.</p>
+        <p><b>أهمية المواد الغذائية:</b> أهمية غذائية؛ إمكانية التخزين؛ عائدات مالية للدول المصدرة؛ وسيلة ضغط؛ استعمالها في الصناعات الغذائية.</p>
+        <p><b>واقع تجارة المواد الغذائية:</b> تحكم الدول المتقدمة في الأسعار؛ تخصصها في تصدير الغذاء وضخامة واردات العالم المتخلف؛ تحكم الشركات الكبرى؛ دور البورصات الكبرى.</p>
+        <p><b>حركة رؤوس الأموال:</b> سيطرة الدول المتقدمة؛ التعامل بعملاتها؛ وجود البورصات الكبرى (وول ستريت، طوكيو، لندن)؛ تبييض الأموال؛ الفضائح المالية للشركات الكبرى؛ الأزمات المالية والاقتصادية الدورية.</p>
+        <p><b>الإعلام والتكنولوجيا:</b> هيمنة أكبر على الأسواق؛ انتشار الأسواق والدفع الإلكتروني؛ انتشار اللغات والثقافات؛ تهميش دور العالم المتخلف واتساع الفجوة؛ تغيير العادات الاستهلاكية؛ توحيد الأسواق والقيم الثقافية والاستهلاكية عبر العولمة.</p>
+      </div>
+
+      <div class="card">
+        <h3>📍 الجغرافيا — الوحدة الثانية: القوى الاقتصادية الكبرى في العالم</h3>
+        <h4>01. مصادر القوة الاقتصادية للو.م.أ وتأثيرها</h4>
+        <p><b>العوامل الطبيعية:</b> المساحة 9.3 م كم²؛ الأطلسي والهادي؛ تنوع المناخ والبيئات؛ تنوع التضاريس؛ وفرة الشبكة المائية (البحيرات العظمى، المسيسيبي).</p>
+        <p><b>العوامل البشرية:</b> أكثر من 320 مليون نسمة؛ يد عاملة مؤهلة؛ جذب الكفاءات والأدمغة؛ تشجيع البحث العلمي؛ طبيعة الفرد الأمريكي المحب والمخلص لعمله.</p>
+        <p><b>مظاهر القوة:</b> 25% من الإنتاج الصناعي العالمي؛ أول مصدر للمواد الغذائية حسب الملخص؛ أكبر البورصات (وول ستريت)؛ 50% من الشركات متعددة الجنسيات؛ 22% من المبادلات التجارية العالمية؛ أكبر مستهلك لموارد الطاقة وضخامة الاستثمارات.</p>
+        <p><b>الأقاليم:</b> الشمال الشرقي: 12% من المساحة و45% من السكان، الميغالوبوليس، مهد الثورة الصناعية، مركز سياسي واقتصادي، موانئ ومطارات كبرى. الجنوب: ثروات طبيعية، تصنيع حديث، موانئ ومطارات منها أتلانتا، مركز أبحاث فضائية، القطن والنسيج والخضر والفواكه. الغرب: الصناعات الحربية، مقرات الشركات متعددة الجنسيات، الفواكه، هوليوود، الثروة السمكية، الصناعات الميكانيكية والكيماوية.</p>
+        <p><b>أثر القوة:</b> الهيمنة على المؤسسات المالية والاقتصادية؛ التحكم في تجارة المواد الاستراتيجية؛ سيطرة الشركات؛ هيمنة الدولار؛ تأثر الدول بالأزمات الأمريكية؛ تأثر أسعار المواد الاستراتيجية.</p>
+        <p><b>المشاكل:</b> كساد المنتجات؛ التبعية للعالم الثالث في الموارد؛ المنافسة الخارجية؛ عجز الميزان التجاري؛ الأزمات الدورية؛ البطالة.</p>
+      </div>
+
+      <div class="card">
+        <h4>02. ظاهرة التكتل وأثرها في اقتصاد الاتحاد الأوروبي</h4>
+        <p><b>المراحل:</b> اتحاد البنلوكس 1944؛ معاهدة باريس 1951؛ اتفاقية روما 1957؛ اتفاقية ماستريخت 1992 واعتماد اليورو.</p>
+        <p><b>عوامل القوة الطبيعية:</b> الموقع الاستراتيجي؛ 2.6 م كم² من الأراضي الصالحة للزراعة؛ تنوع الأقاليم والمناخ؛ الدانوب والراين؛ المتوسط والأطلسي؛ الجبال والهضاب.</p>
+        <p><b>العوامل البشرية والاقتصادية:</b> حوالي 500 مليون نسمة؛ يد عاملة مؤهلة؛ أسواق حيوية؛ تكنولوجيا حديثة؛ نجاح التكتل؛ رؤوس الأموال والاستثمارات؛ المؤسسات المالية والاقتصادية.</p>
+        <p><b>العوامل التاريخية والسياسية:</b> الثورة الصناعية المبكرة؛ الحركة الاستعمارية؛ مشروع مارشال؛ الاستقرار بعد ح ع 2.</p>
+        <p><b>المعيقات:</b> التبعية للثروات الطبيعية؛ تداعيات البريكست؛ التفاوت الاقتصادي والاجتماعي؛ البطالة؛ الكساد؛ الأزمات الدورية؛ عدم احترام مبدأ الأفضلية.</p>
+        <p><b>إقليم الراين:</b> 120 مليون نسمة؛ موانئ دانكرك ولوهافر؛ رؤوس أموال ومؤسسات مالية؛ موارد مائية؛ 40% من صادرات الاتحاد؛ 18% من صادرات العالم؛ قطب سياحي.</p>
+        <p><b>الواجهة الشمالية والغربية:</b> البترول والغاز؛ الثروة السمكية؛ السياحة؛ بورصة لندن؛ الربط التجاري مع الولايات المتحدة وكندا؛ الربط بين أوروبا القارية والدول الجزرية.</p>
+        <p><b>دور التكتل:</b> قطب اقتصادي عالمي؛ توحيد العملة بين أغلب الدول؛ مراتب متقدمة في تصدير الغذاء؛ ثاني أكبر منتج للسيارات حسب الملخص؛ 40% من التجارة العالمية؛ ثالث قوة مصدرة للتكنولوجيا.</p>
+        <p><b>الأهداف:</b> تجاوز الخلافات؛ التخفيف من التبعية الاقتصادية للو.م.أ؛ استعادة المكانة؛ تقليص الفوارق؛ تحقيق التكامل الاقتصادي.</p>
+      </div>
+
+      <div class="card">
+        <h4>03. العلاقة بين السكان والتنمية في شرق وجنوب شرق آسيا</h4>
+        <p><b>المميزات:</b> موقع استراتيجي؛ شريط ساحلي طويل؛ طابع جبلي؛ مناخ مداري وموسمي؛ افتقار للموارد الطبيعية؛ وزن ديمغرافي كبير.</p>
+        <p><b>دور العنصر البشري:</b> حوالي 2 مليار نسمة؛ يد عاملة مؤهلة وذات مردودية؛ سوق استهلاكية واسعة؛ الهجرة وتدفق رؤوس الأموال؛ سرعة التكيف التكنولوجي؛ انخفاض الأجور وجذب المستثمرين.</p>
+        <p><b>سياسات الاستثمار:</b> تطوير التعليم والمناهج؛ تشجيع البحث العلمي؛ تنظيم وتحديد النسل؛ التهيئة الإقليمية؛ تطوير التكنولوجيا؛ تدريب العمال؛ التكتل (الأسيان والنمور والتنينات)؛ الاستفادة من التجربة اليابانية.</p>
+        <p><b>المكانة:</b> قطب اقتصادي منافس؛ إنتاج صناعي ضخم؛ نمو مرتفع؛ 21% من التجارة العالمية؛ استثمارات ضخمة؛ قطب مالي؛ تطور تكنولوجي ورقمي؛ ريادة في منتجات عديدة.</p>
+        <p><b>المشاكل:</b> كساد المنتجات؛ التبعية للموارد الطبيعية؛ المنافسة؛ الأزمات الدورية؛ الكوارث الطبيعية؛ ضيق المساحة الزراعية.</p>
+      </div>
+
+      <div class="card">
+        <h3>🇩🇿 الاقتصاد الجزائري في العالم</h3>
+        <p><b>مع المغرب العربي وأفريقيا:</b> مبادلات لا تتجاوز 3% حسب الملخص، بسبب التبعية لأوروبا، الصراع السياسي، تشابه البنى الاقتصادية، اختلاف الأنظمة، غياب التخطيط والقيود الجمركية، وفشل التكتلات. ومن الشركاء الأفارقة: كوت ديفوار، جنوب إفريقيا، نيجيريا، الكاميرون.</p>
+        <p><b>مع أوروبا:</b> أهم شريك؛ أكثر من 48% من الصادرات وأكثر من 58% من الواردات حسب الملخص؛ عواملها التاريخية والجغرافية واتفاقية الشراكة سنة 2002 واختلاف الاقتصاديات.</p>
+        <p><b>مع بقية العالم:</b> تنويع المبادلات مع الولايات المتحدة والصين وتركيا والأرجنتين والبرازيل واليابان؛ الصين 16% والولايات المتحدة 6% حسب الملخص. الصادرات: المحروقات والمنتجات الفلاحية؛ الواردات: الغذاء والتجهيزات والعتاد الفلاحي والأدوات الطبية والأدوية والمواد المصنعة ونصف المصنعة.</p>
+        <p><b>مكانة الاقتصاد الجزائري:</b> المراتب والأرقام الخاصة بالغاز والبترول والاستثمارات الأمريكية وحصة المبادلات العالمية كما وردت في الملخص المرسل.</p>
+      </div>
+
+      <div class="card">
+        <h3>🌊 الجزائر في البحر المتوسط</h3>
+        <p><b>خصائص حوض المتوسط:</b> موقع استراتيجي؛ مناخ متوسطي؛ تضاريس جبلية؛ سهول ساحلية وداخلية؛ نباتات منها الزيتون والصنوبر والفلين والبلوط؛ تمركز سكاني بالساحل؛ هجرة من الجنوب إلى الشمال وسياحة بالعكس؛ حضارات رومانية وعربية إسلامية وتاريخ استعماري.</p>
+        <p><b>علاقة الجزائر بالضفة الشمالية:</b> ندوة برشلونة 27–28 نوفمبر 1995؛ الشراكة والتعاون الاقتصادي والاجتماعي والثقافي والأمني؛ منطقة حرة 2010 حسب الملخص. اتفاقية الشراكة مع الاتحاد الأوروبي أبريل 2002: إلغاء الضرائب على واردات الاتحاد خلال 12 سنة؛ التعاون الاجتماعي والثقافي والاقتصادي؛ تحويل رؤوس الأموال؛ الشركات المشتركة؛ استقطاب الاستثمارات؛ تأهيل الاقتصاد للمنافسة.</p>
+        <p><b>الآفاق:</b> استعادة الدور الإقليمي والدولي؛ الانضمام إلى منظمة التجارة العالمية؛ تفعيل اتحاد المغرب العربي؛ تجسيد الشراكة الأورو-متوسطية؛ تحرير الاقتصاد واكتساب التكنولوجيا؛ معالجة الهجرة السرية.</p>
+      </div>
+
+      <div class="card">
+        <h3>🇮🇳 السكان والتنمية في الهند</h3>
+        <p><b>الوسط الطبيعي:</b> 3.2 م كم²؛ موقع استراتيجي؛ شريط ساحلي على المحيط الهندي؛ سهول زراعية (الغانج وكرومندل)؛ الهيمالايا والهضاب؛ شبكة مائية؛ تنوع مناخي وموسم مطير من جوان إلى سبتمبر.</p>
+        <p><b>الوسط البشري:</b> أكثر من مليار نسمة (18% من سكان العالم حسب الملخص)؛ تعدد الأجناس والأديان واللغات؛ تنوع العادات؛ حوالي 70% في القرى والأرياف؛ ارتفاع الزيادة الطبيعية وسياسة تحديد النسل ورفع سن الزواج.</p>
+        <p><b>سياسة التنمية:</b> اقتصاد السوق؛ التصنيع؛ البحث العلمي والمجالات الاستراتيجية؛ الثورة الخضراء؛ الحد من احتكار الإقطاعيين وتوزيع الأراضي؛ التكنولوجيا الزراعية والصناعية.</p>
+        <p><b>النجاحات:</b> تحديث الزراعة وتحقيق الاكتفاء؛ مراتب متقدمة في أكثر من 15 محصولًا؛ قوة صناعية وتكنولوجية؛ أضخم شبكة ري حسب الملخص؛ ضمن الدول العشر الأولى اقتصاديًا؛ دولة نووية.</p>
+        <p><b>الإخفاقات والعراقيل:</b> سوء التغذية؛ التقلبات المناخية؛ التبعية للأسمدة والمبيدات؛ الفوارق الاجتماعية؛ الزيادة السكانية؛ الصراعات المرتبطة بالتركيبة السكانية.</p>
+        <p><b>المفارقات:</b> تقدم تكنولوجي مع عجز غذائي وصحي؛ كفاءات عالمية مع الأمية؛ منشآت متطورة مع مظاهر تخلف؛ تطور صحي مع أمراض وأوبئة؛ دولة نووية ومتقدمة بحثيًا مع استمرار الفقر والتخلف.</p>
+      </div>
+
+      <div class="card">
+        <h3>🇧🇷 التنمية في البرازيل</h3>
+        <p><b>عناصر القوة:</b> موقع استراتيجي ومساحات زراعية؛ واجهة بحرية وموارد ضخمة؛ قوة سكانية ويد عاملة؛ أسواق واسعة؛ تطور تكنولوجي واستثمارات؛ هياكل صناعية وبنية تحتية.</p>
+        <p><b>عناصر الضعف:</b> هيمنة التصدير وإهمال الغذاء؛ الشركات الأجنبية؛ التركز السكاني الساحلي؛ التبعية والديون؛ الارتباط بالاستثمارات الأجنبية؛ تقلص الغابات والتلوث.</p>
+        <p><b>وسائل التنمية:</b> اقتصاد السوق والخصخصة منذ 1988؛ تشجيع الاستثمار؛ القروض الخارجية؛ الصناعات الثقيلة والتحويلية؛ الزراعة النقدية (التبغ والسكر والبن)؛ التهيئة الإقليمية.</p>
+        <p><b>مشاكل التنمية:</b> الديون؛ هيمنة الشركات الأجنبية وتحويل الأرباح؛ استغلال اليد العاملة؛ التفاوت الطبقي؛ النزوح نحو المدن الساحلية.</p>
+        <p><b>مشاكل البيئة:</b> تدهور الغابات؛ التلوث الصناعي الساحلي؛ الانجراف؛ انقراض أنواع حية؛ تغيرات مناخية مرتبطة بتراجع الغطاء الغابي.</p>
+      </div>
+
+      <div class="card">
+        <h3>📜 التاريخ — الوحدة الأولى: تطور العالم في ظل القطبية الثنائية 1945–1989</h3>
+        <p><b>بروز الصراع:</b> القضاء على الديكتاتوريات؛ تراجع القوى التقليدية؛ بروز قوى جديدة؛ حركات التحرر؛ تأسيس الأمم المتحدة؛ تغير الخريطة السياسية؛ التطور العلمي والتكنولوجي؛ ظهور الأسلحة النووية؛ تطور الإعلام والاتصال؛ خروج الولايات المتحدة مستفيدة وأوروبا مدمرة؛ انقسام العالم شرق/غرب وشمال/جنوب؛ تبني شرق أوروبا للاشتراكية.</p>
+        <p><b>أسباب الحرب الباردة:</b> الصراع الإيديولوجي؛ التنافس على مناطق النفوذ؛ تشدد القيادات؛ سباق التسلح؛ زوال مبررات التحالف بانتهاء ح ع 2.</p>
+        <p><b>استراتيجيات المعسكرين:</b> الغربي اقتصاديًا: مارشال، ترومان، إيزنهاور، الحصار الاقتصادي؛ عسكريًا: الناتو، السياتو، الحلف المركزي، القواعد؛ سياسيًا: الاحتواء والتطويق وملء الفراغ والاستقطاب. الشرقي اقتصاديًا: الكوميكون والمقاطعة؛ عسكريًا: وارسو وسباق التسلح؛ سياسيًا: جدانوف والكومنفورم ودعم حركات التحرر.</p>
+        <p><b>الأزمات:</b> برلين الأولى 1948–1949 والثانية 1958–1961؛ كوريا 1950–1953 وتقسيمها عند خط 38؛ السويس 1956؛ كوبا 1962 ونشر الصواريخ وانطلاق الانفراج بعد إنشاء الخط الهاتفي الأحمر 1963 حسب الملخص.</p>
+        <p><b>الانفراج وعدم الانحياز:</b> التعايش السلمي الذي دعا إليه خروتشوف بعد توازن الرعب ووفاة ستالين 1953؛ تأسيس حركة عدم الانحياز في بلغراد 1961 بعد باندونغ 1955؛ مطالب مؤتمر الجزائر 1973: نظام اقتصادي عالمي عادل، حوار شمال-جنوب، تعاون جنوب-جنوب.</p>
+        <p><b>التفكك والأحادية:</b> فشل إصلاحات غورباتشوف؛ اتساع المساحة وتعدد القوميات؛ الضغط الغربي؛ سقوط جدار برلين 1989؛ حل وارسو والكوميكون؛ استقالة غورباتشوف وتفكك الاتحاد السوفياتي 1991؛ النظام الدولي الجديد والعولمة الاقتصادية كما ورد في الملخص.</p>
+      </div>
+
+      <div class="card">
+        <h3>🇩🇿 التاريخ — الوحدة الثانية: الجزائر بين 1945–1989</h3>
+        <p><b>من الوعي الوطني إلى الثورة:</b> مجازر 8 ماي 1945 (+45 ألف شهيد حسب الملخص)؛ المنظمة الخاصة 1947؛ أزمة حركة انتصار الحريات الديمقراطية 1953؛ المصاليون والمركزيون؛ التيار الثوري؛ اللجنة الثورية للوحدة والعمل؛ اجتماع 22 واجتماعات الستة؛ اندلاع الثورة 1 نوفمبر 1954 وبيان أول نوفمبر وتأسيس جبهة وجيش التحرير الوطني.</p>
+        <p><b>استراتيجية الثورة:</b> هجومات الشمال القسنطيني 20 أوت 1955 بقيادة زيغود يوسف؛ مؤتمر الصومام 20 أوت 1956؛ المجلس الوطني للثورة ولجنة التنسيق والتنفيذ؛ أولوية الداخل على الخارج والسياسي على العسكري.</p>
+        <p><b>رد فعل فرنسا:</b> خطا شال وموريس؛ المناطق المحرمة ومراكز التعذيب؛ مشروع قسنطينة 1958؛ سلم الشجعان؛ القوة الثالثة.</p>
+        <p><b>المفاوضات والاستقلال:</b> اتفاقيات إيفيان الثانية 18 مارس 1962؛ وقف إطلاق النار 19 مارس 1962.</p>
+      </div>
+
+      <div class="card">
+        <h3>🏛️ التاريخ — الوحدة الثالثة: بناء الدولة والسياسة الخارجية 1962–1989</h3>
+        <p><b>خيارات بناء الدولة:</b> الحزب الواحد؛ تشييد دولة ديمقراطية؛ الوحدة المغاربية؛ الاشتراكية ومخططات التنمية ومحاربة الاحتكارات؛ تعميم التعليم والصحة؛ تطوير اللغة العربية؛ رفع مستوى المعيشة.</p>
+        <p><b>أحمد بن بلة 1962–1965:</b> دستور 1963؛ ميثاق 1964؛ الانضمام إلى الأمم المتحدة والجامعة العربية.</p>
+        <p><b>هواري بومدين 1965–1978:</b> التصحيح الثوري 19 جوان 1965؛ المجالس المنتخبة؛ دستور 1976؛ مؤتمر عدم الانحياز 1973؛ المطالبة بنظام اقتصادي عالمي جديد.</p>
+        <p><b>الشاذلي بن جديد:</b> مرحلة 1979–1992؛ أحداث 5 أكتوبر 1988؛ دستور 1989 والتعددية الحزبية والانتقال إلى اقتصاد السوق؛ إعلان قيام دولة فلسطين بالجزائر 1988.</p>
+        <p><b>السياسة الخارجية:</b> المبادئ: استعادة السيادة؛ عدم التدخل؛ مناصرة القضايا العادلة. الأبعاد: وطني، قومي، تحرري، إنساني. الدور: عضو مؤسس للوحدة الإفريقية 1963؛ المشاركة في الحروب العربية 1967 و1973؛ دعم القضية الفلسطينية والحرية؛ الدعوة إلى إصلاح منظمة الأمم المتحدة.</p>
+      </div>
+    </section>
+
+    <section id="physics">
+      <h2>⚛️ ملخص الفيزياء — شعب علمية وتقني رياضي</h2>
+      <div class="card">
+        <h3>المتابعة الزمنية لتحول كيميائي</h3>
+        <p>سرعة التفاعل v=dx/dt. والسرعة الحجمية vvol=(1/Vtot)×dx/dt. زمن نصف التفاعل هو الزمن الذي يتحقق فيه x=xmax/2. من العوامل الحركية: درجة الحرارة والتركيز والوسيط.</p>
+      </div>
+      <div class="card">
+        <h3>التحولات النووية</h3>
+        <p>N(t)=N0×e^(-λt). نصف العمر t1/2=ln(2)/λ. طاقة الربط El=Δm×c².</p>
+      </div>
+      <div class="card">
+        <h3>الكهرباء — أساسيات</h3>
+        <p>راجع العلاقة بين التوتر وشدة التيار والمقاومة، وقوانين الدارات، ثم طبّق الوحدات والتحقق البعدي في كل تمرين.</p>
+      </div>
+    </section>
+
+    <section id="biology">
+      <h2>🧬 ملخص علوم الطبيعة والحياة — علوم تجريبية</h2>
+      <div class="card">
+        <h3>الوحدة 1: تركيب البروتين</h3>
+        <p><b>الاستنساخ:</b> في النواة بوساطة ARN polymerase لتشكيل ARNm انطلاقًا من ADN. <b>الترجمة:</b> في الهيولى بوساطة الريبوسومات وARNt لبناء السلسلة البيبتيدية حسب شفرات ARNm.</p>
+        <p class="rule">⭐ الرامزة AUG تمثل رامزة بداية الترجمة.</p>
+      </div>
+      <div class="card">
+        <h3>الوحدة 2: بنية ووظيفة البروتين</h3>
+        <p>وظيفة البروتين مرتبطة ببنيته الفراغية وبترتيب الأحماض الأمينية والروابط والتآثرات التي تثبت بنيته.</p>
+      </div>
+      <div class="card">
+        <h3>الوحدة 3: المعلومة الوراثية</h3>
+        <p>ADN يحمل المعلومة الوراثية، ويُنقل التعبير عنها عبر ARN ثم البروتين. الطفرات قد تغيّر تسلسل القواعد وبالتالي قد تؤثر في البروتين ووظيفته.</p>
+      </div>
+    </section>
+
+    <section id="management">
+      <h2>📊 ملخص التسيير والاقتصاد — تسيير واقتصاد</h2>
+      <div class="card">
+        <h3>المحاسبة المالية</h3>
+        <p>الإهتلاك هو توزيع نقص قيمة التثبيتات نتيجة الاستعمال أو التقادم. في الإهتلاك الخطي: A=Vo/N=Vo×a%. خسارة القيمة ترتبط بالمقارنة بين القيمة المحاسبية الصافية والقيمة القابلة للتحصيل.</p>
+      </div>
+      <div class="card">
+        <h3>الاقتصاد والقانون — خريطة مراجعة</h3>
+        <p>راجع المفاهيم والتعريفات والعلاقات الأساسية، ثم اربط كل مفهوم بمثال اقتصادي أو قانوني بسيط، واحرص على التمييز بين التعريف والنتيجة والسبب.</p>
+      </div>
+    </section>
+
+    <section id="technology">
+      <h2>⚙️ ملخص التكنولوجيا — تقني رياضي</h2>
+      <div class="card">
+        <h3>الهندسة المدنية</h3>
+        <p>دراسة المنشآت والخرسانة المسلحة والمقاومة.</p>
+      </div>
+      <div class="card">
+        <h3>الهندسة الميكانيكية</h3>
+        <p>عناصر الآلات وأنظمة نقل الحركة والمخططات التقنية.</p>
+      </div>
+      <div class="card">
+        <h3>الهندسة الكهربائية</h3>
+        <p>الدارات المنطقية والمعالجات والمحركات والأنظمة الآلية.</p>
+      
